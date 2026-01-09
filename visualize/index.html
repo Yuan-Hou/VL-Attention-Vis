@@ -1,0 +1,1281 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>VL Attention 可视化</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: #1a1a1a;
+            color: #e0e0e0;
+            overflow-x: hidden;
+        }
+
+        .header {
+            background: #2d2d2d;
+            padding: 15px 20px;
+            border-bottom: 2px solid #3d3d3d;
+            position: sticky;
+            top: 0;
+            z-index: 100;
+        }
+
+        .header h1 {
+            font-size: 24px;
+            color: #4fc3f7;
+        }
+
+        .container {
+            max-width: 98vw;
+            margin: 0 auto;
+            padding: 20px;
+        }
+
+        .visualization-grid {
+            display: grid;
+            grid-template-columns: 1fr 2fr;
+            gap: 20px;
+            margin-bottom: 20px;
+        }
+
+        .panel {
+            background: #2d2d2d;
+            border-radius: 8px;
+            padding: 15px;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.3);
+        }
+
+        .panel-title {
+            font-size: 18px;
+            font-weight: bold;
+            margin-bottom: 10px;
+            color: #4fc3f7;
+            border-bottom: 2px solid #3d3d3d;
+            padding-bottom: 8px;
+        }
+
+        /* 左侧：平均attention */
+        .average-panel {
+            position: relative;
+        }
+
+        .panel-reset-btn {
+            position: absolute;
+            top: 10px;
+            right: 15px;
+            background: rgba(79, 195, 247, 0.8);
+            color: white;
+            border: none;
+            padding: 6px 12px;
+            border-radius: 4px;
+            cursor: pointer;
+            font-size: 12px;
+            opacity: 0.7;
+            transition: opacity 0.2s;
+            z-index: 10;
+        }
+
+        .panel-reset-btn:hover {
+            opacity: 1;
+            background: rgba(79, 195, 247, 1);
+        }
+
+        .panel-reset-btn.hidden {
+            display: none;
+        }
+
+        .image-container {
+            position: relative;
+            width: 100%;
+            display: inline-block;
+        }
+
+        .base-image {
+            width: 100%;
+            height: auto;
+            display: block;
+            border-radius: 4px;
+        }
+
+        .attention-overlay {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            opacity: 0.6;
+            border-radius: 4px;
+        }
+
+        /* 右侧：层级grid */
+        .layers-panel {
+            max-height: 80vh;
+            overflow-y: auto;
+        }
+
+        .layers-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(120px, 1fr));
+            gap: 8px;
+            margin-top: 10px;
+        }
+
+        .layer-item {
+            position: relative;
+            aspect-ratio: 16/9;
+            background: #1a1a1a;
+            border-radius: 4px;
+            overflow: hidden;
+            cursor: pointer;
+            transition: transform 0.2s;
+        }
+
+        .layer-item:hover {
+            transform: scale(1.05);
+            z-index: 10;
+        }
+
+        .layer-item img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+
+        .layer-label {
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            background: rgba(0,0,0,0.7);
+            color: white;
+            font-size: 10px;
+            padding: 2px 4px;
+            text-align: center;
+        }
+
+        /* 下方：文本面板 */
+        .text-panel {
+            grid-column: 1 / -1;
+        }
+
+        .text-content {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 20px;
+            margin-top: 10px;
+        }
+
+        .text-section {
+            background: #1a1a1a;
+            padding: 15px;
+            border-radius: 4px;
+            max-height: 300px;
+            overflow-y: auto;
+            position: relative;
+        }
+
+        .text-section h3 {
+            color: #81c784;
+            margin-bottom: 10px;
+            font-size: 16px;
+        }
+
+        .reset-btn {
+            position: absolute;
+            top: 10px;
+            right: 10px;
+            background: rgba(79, 195, 247, 0.8);
+            color: white;
+            border: none;
+            padding: 6px 12px;
+            border-radius: 4px;
+            cursor: pointer;
+            font-size: 12px;
+            opacity: 0.7;
+            transition: opacity 0.2s;
+            z-index: 10;
+        }
+
+        .reset-btn:hover {
+            opacity: 1;
+            background: rgba(79, 195, 247, 1);
+        }
+
+        .reset-btn.hidden {
+            display: none;
+        }
+
+        .text-section pre {
+            white-space: pre-wrap;
+            word-wrap: break-word;
+            line-height: 1.6;
+            font-size: 14px;
+        }
+
+        .token {
+            display: inline;
+            padding: 2px 4px;
+            border-radius: 3px;
+            cursor: pointer;
+            transition: all 0.2s;
+        }
+
+        .token.output-token {
+            cursor: pointer;
+        }
+
+        .token.output-token:hover {
+            outline: 2px solid #4fc3f7;
+            transform: scale(1.05);
+            z-index: 10;
+        }
+
+        .token.active {
+            outline: 2px solid #ff5722;
+        }
+
+        /* 加载状态 */
+        .loading {
+            text-align: center;
+            padding: 40px;
+            color: #4fc3f7;
+            font-size: 18px;
+        }
+
+        .error {
+            text-align: center;
+            padding: 40px;
+            color: #f44336;
+            font-size: 16px;
+        }
+
+        /* 滚动条样式 */
+        ::-webkit-scrollbar {
+            width: 8px;
+            height: 8px;
+        }
+
+        ::-webkit-scrollbar-track {
+            background: #1a1a1a;
+        }
+
+        ::-webkit-scrollbar-thumb {
+            background: #4fc3f7;
+            border-radius: 4px;
+        }
+
+        ::-webkit-scrollbar-thumb:hover {
+            background: #29b6f6;
+        }
+
+        /* 信息提示 */
+        .info-bar {
+            background: #3d3d3d;
+            padding: 8px 15px;
+            border-radius: 4px;
+            margin-bottom: 10px;
+            font-size: 13px;
+            color: #b0b0b0;
+        }
+
+        .info-bar strong {
+            color: #4fc3f7;
+        }
+
+        /* 控制面板 */
+        .control-panel {
+            background: #3d3d3d;
+            padding: 15px;
+            border-radius: 4px;
+            margin-bottom: 15px;
+        }
+
+        .control-group {
+            margin-bottom: 15px;
+        }
+
+        .control-group:last-child {
+            margin-bottom: 0;
+        }
+
+        .control-group label {
+            display: block;
+            color: #4fc3f7;
+            margin-bottom: 8px;
+            font-size: 14px;
+            font-weight: bold;
+        }
+
+        .range-control {
+            display: grid;
+            grid-template-columns: auto 1fr auto;
+            gap: 10px;
+            align-items: center;
+        }
+
+        .range-control input[type="range"] {
+            width: 100%;
+        }
+
+        .range-control span {
+            color: #e0e0e0;
+            font-size: 13px;
+            min-width: 40px;
+            text-align: center;
+        }
+
+        input[type="range"] {
+            -webkit-appearance: none;
+            appearance: none;
+            height: 6px;
+            background: #1a1a1a;
+            border-radius: 3px;
+            outline: none;
+        }
+
+        input[type="range"]::-webkit-slider-thumb {
+            -webkit-appearance: none;
+            appearance: none;
+            width: 16px;
+            height: 16px;
+            background: #4fc3f7;
+            border-radius: 50%;
+            cursor: pointer;
+        }
+
+        input[type="range"]::-moz-range-thumb {
+            width: 16px;
+            height: 16px;
+            background: #4fc3f7;
+            border-radius: 50%;
+            cursor: pointer;
+            border: none;
+        }
+
+        .switch-control {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .switch {
+            position: relative;
+            display: inline-block;
+            width: 50px;
+            height: 24px;
+        }
+
+        .switch input {
+            opacity: 0;
+            width: 0;
+            height: 0;
+        }
+
+        .slider {
+            position: absolute;
+            cursor: pointer;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background-color: #1a1a1a;
+            transition: .3s;
+            border-radius: 24px;
+        }
+
+        .slider:before {
+            position: absolute;
+            content: "";
+            height: 18px;
+            width: 18px;
+            left: 3px;
+            bottom: 3px;
+            background-color: white;
+            transition: .3s;
+            border-radius: 50%;
+        }
+
+        input:checked + .slider {
+            background-color: #4fc3f7;
+        }
+
+        input:checked + .slider:before {
+            transform: translateX(26px);
+        }
+
+        /* Layer按钮 */
+        .layer-buttons {
+            display: flex;
+            gap: 8px;
+            flex-wrap: wrap;
+            margin-top: 10px;
+        }
+
+        .layer-btn {
+            padding: 8px 16px;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            font-size: 13px;
+            transition: all 0.2s;
+            color: white;
+            font-weight: bold;
+        }
+
+        .layer-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 4px 8px rgba(0,0,0,0.3);
+        }
+
+        .layer-btn.active {
+            outline: 3px solid #fff;
+            transform: scale(1.05);
+        }
+
+        /* Token固定状态 */
+        .token.pinned {
+            outline: 3px solid #ff5722;
+            background: rgba(255, 87, 34, 0.2) !important;
+        }
+    </style>
+</head>
+<body>
+    <div class="header">
+        <h1>🔍 Vision-Language Attention 可视化</h1>
+    </div>
+
+    <div id="loading" class="loading">
+        正在加载数据...
+    </div>
+
+    <div id="error" class="error" style="display: none;"></div>
+
+    <div id="app" class="container" style="display: none;">
+        <div class="info-bar">
+            <strong>模型:</strong> <span id="modelName">-</span> | 
+            <strong>输出Token数:</strong> <span id="tokenCount">-</span> | 
+            <strong>Layers:</strong> <span id="layerCount">-</span> | 
+            <strong>Heads:</strong> <span id="headCount">-</span> |
+            <strong>提示:</strong> 悬浮/点击输出文本的token查看attention分布
+        </div>
+
+        <!-- 控制面板 -->
+        <div class="control-panel">
+            <div class="control-group">
+                <label>🎨 色彩范围调节 (0-100)</label>
+                <div class="range-control">
+                    <span>最小值:</span>
+                    <input type="range" id="colorMin" min="0" max="100" value="0">
+                    <span id="colorMinValue">0</span>
+                </div>
+                <div class="range-control">
+                    <span>最大值:</span>
+                    <input type="range" id="colorMax" min="0" max="100" value="100">
+                    <span id="colorMaxValue">100</span>
+                </div>
+            </div>
+            
+            <div class="control-group">
+                <div class="switch-control">
+                    <label style="margin: 0;">🔍 最大对比度模式</label>
+                    <label class="switch">
+                        <input type="checkbox" id="autoContrastSwitch">
+                        <span class="slider"></span>
+                    </label>
+                    <span style="color: #b0b0b0; font-size: 12px;">忽略全局范围，自动调整当前显示的对比度</span>
+                </div>
+            </div>
+
+            <div class="control-group">
+                <label>📚 选择Layer</label>
+                <div id="layerButtons" class="layer-buttons"></div>
+            </div>
+        </div>
+
+        <div class="visualization-grid">
+            <!-- 左侧：平均attention -->
+            <div class="panel average-panel">
+                <div class="panel-title" id="averageTitle">📊 平均 Attention Map</div>
+                <button id="resetAverageBtn" class="panel-reset-btn hidden" title="恢复全局平均">↺ 复原</button>
+                <div class="image-container">
+                    <img id="averageImage" class="base-image" alt="图像">
+                    <canvas id="averageCanvas" class="attention-overlay"></canvas>
+                </div>
+            </div>
+
+            <!-- 右侧：层级grid -->
+            <div class="panel layers-panel">
+                <div class="panel-title">🗂️ 各层 Attention Maps (Layers × Heads)</div>
+                <div id="layersGrid" class="layers-grid"></div>
+            </div>
+
+            <!-- 下方：文本 -->
+            <div class="panel text-panel">
+                <div class="panel-title">💬 输入输出文本</div>
+                <div class="text-content">
+                    <div class="text-section">
+                        <h3>📝 输入</h3>
+                        <pre id="inputText"></pre>
+                    </div>
+                    <div class="text-section">
+                        <h3>💡 输出 (悬浮/点击查看attention)</h3>
+                        <button id="resetColorBtn" class="reset-btn hidden" title="恢复原始颜色">↺ 复原</button>
+                        <pre id="outputText"></pre>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script type="module">
+        // 全局状态
+        let metadata = null;
+        let attentionData = null;
+        let currentTokenIdx = null;
+        let pinnedTokenIdx = null;
+        let currentLayer = 0;
+        let hoveredLayerHead = null; // {layer, head} or null
+        let useCustomColors = false; // 是否使用自定义layer/head的颜色
+        let selectedLayer = null; // 选中的layer用于显示平均attention，null表示全局平均
+        
+        // 色彩控制
+        let colorMin = 0;
+        let colorMax = 100;
+        let autoContrast = false;
+
+        // 初始化
+        async function init() {
+            try {
+                await loadData();
+                renderUI();
+                setupEventListeners();
+                
+                document.getElementById('loading').style.display = 'none';
+                document.getElementById('app').style.display = 'block';
+            } catch (error) {
+                showError('加载失败: ' + error.message);
+                console.error(error);
+            }
+        }
+
+        // 加载数据
+        async function loadData() {
+            // 加载JSON元数据
+            const jsonResponse = await fetch('../data/attention_output.json');
+            metadata = await jsonResponse.json();
+
+            // 加载NPZ attention数据
+            if (metadata.attention_file) {
+                const npzResponse = await fetch(`../data/${metadata.attention_file}`);
+                const arrayBuffer = await npzResponse.arrayBuffer();
+                attentionData = await parseNpz(arrayBuffer);
+            }
+        }
+
+        // 解析NPZ文件
+        async function parseNpz(arrayBuffer) {
+            // 使用fflate解压
+            const fflate = await import('https://cdn.jsdelivr.net/npm/fflate@0.8.1/esm/browser.js');
+            const unzipped = fflate.unzipSync(new Uint8Array(arrayBuffer));
+
+            // 解析numpy数组
+            const data = parseNpy(unzipped['attention.npy']);
+            const averageData = parseNpy(unzipped['average_data.npy']);
+            const layers = parseNpyScalar(unzipped['layers.npy']);
+            const heads = parseNpyScalar(unzipped['heads.npy']);
+            const imageSize = parseNpy(unzipped['image_token_size.npy']);
+            const minVal = parseNpyScalar(unzipped['min_val.npy']);
+            const maxVal = parseNpyScalar(unzipped['max_val.npy']);
+
+            console.log('NPZ解析完成:', {
+                dataShape: data.shape,
+                avgShape: averageData.shape,
+                layers, heads,
+                imageSize: imageSize.data,
+                minVal, maxVal
+            });
+
+            return {
+                data: data,
+                averageData: averageData,
+                layers: layers,
+                heads: heads,
+                imageSize: Array.from(imageSize.data),
+                minVal: minVal,
+                maxVal: maxVal
+            };
+        }
+
+        // 简化的NPY解析器
+        function parseNpy(npyBytes) {
+            try {
+                const view = new DataView(npyBytes.buffer, npyBytes.byteOffset);
+                
+                // 跳过magic number (6 bytes) + version (2 bytes)
+                let offset = 8;
+                
+                // 读取header长度
+                const headerLen = view.getUint16(offset, true);
+                offset += 2;
+                
+                // 读取header
+                const headerStr = new TextDecoder().decode(
+                    npyBytes.subarray(offset, offset + headerLen)
+                );
+                offset += headerLen;
+
+                // 解析shape和dtype
+                const shapeMatch = headerStr.match(/'shape':\s*\(([^)]*)\)/);
+                const dtypeMatch = headerStr.match(/'descr':\s*'([^']+)'/);
+                
+                if (!shapeMatch || !dtypeMatch) {
+                    throw new Error('无法解析NPY header: ' + headerStr);
+                }
+
+                const shapeStr = shapeMatch[1].trim();
+                const shape = shapeStr ? shapeStr.split(',').map(s => {
+                    const num = parseInt(s.trim());
+                    return isNaN(num) ? null : num;
+                }).filter(n => n !== null) : [];
+                
+                const dtype = dtypeMatch[1];
+
+                // 计算数据大小
+                const totalElements = shape.reduce((a, b) => a * b, 1);
+                
+                // 读取数据
+                let data;
+                const dataView = new DataView(npyBytes.buffer, npyBytes.byteOffset + offset);
+                
+                if (dtype === '|i1' || dtype === 'i1' || dtype === '<i1') {
+                    // int8
+                    data = new Int8Array(npyBytes.buffer, npyBytes.byteOffset + offset, totalElements);
+                } else if (dtype === '<i4' || dtype === 'i4') {
+                    // int32
+                    data = new Int32Array(npyBytes.buffer, npyBytes.byteOffset + offset, totalElements);
+                } else if (dtype === '<i8' || dtype === 'i8') {
+                    // int64
+                    data = new BigInt64Array(npyBytes.buffer, npyBytes.byteOffset + offset, totalElements);
+                } else if (dtype === '<f4' || dtype === 'f4') {
+                    // float32
+                    data = new Float32Array(npyBytes.buffer, npyBytes.byteOffset + offset, totalElements);
+                } else if (dtype === '<f8' || dtype === 'f8') {
+                    // float64
+                    data = new Float64Array(npyBytes.buffer, npyBytes.byteOffset + offset, totalElements);
+                } else {
+                    throw new Error(`不支持的dtype: ${dtype}`);
+                }
+
+                return { 
+                    data: data,  // 不转换为Array，直接使用TypedArray
+                    shape: shape,
+                    dtype: dtype
+                };
+            } catch (error) {
+                console.error('NPY解析错误:', error, npyBytes.length);
+                throw error;
+            }
+        }
+
+        function parseNpyScalar(npyBytes) {
+            const result = parseNpy(npyBytes);
+            if (result.data.length === 1) {
+                return result.dtype.includes('i8') ? Number(result.data[0]) : result.data[0];
+            }
+            return result.data;
+        }
+
+        // 渲染UI
+        function renderUI() {
+            // 填充信息栏
+            document.getElementById('modelName').textContent = metadata.metadata.model;
+            document.getElementById('tokenCount').textContent = metadata.metadata.output_token_range[1] - metadata.metadata.output_token_range[0] + 1;
+            document.getElementById('layerCount').textContent = attentionData.layers;
+            document.getElementById('headCount').textContent = attentionData.heads;
+
+            // 渲染layer按钮
+            renderLayerButtons();
+
+            // 设置图片
+            const img = document.getElementById('averageImage');
+            img.src = metadata.metadata.image_base64;
+            img.onload = () => {
+                setupCanvas();
+                // 初始化时显示第一个token的attention
+                renderAverageAttention(0, null);
+            };
+
+            // 渲染层级grid
+            renderLayersGrid();
+            
+            // 初始化时显示第一个token的attention maps
+            updateLayersGrid(0);
+
+            // 渲染文本
+            renderText();
+        }
+
+        // 设置canvas
+        function setupCanvas() {
+            const img = document.getElementById('averageImage');
+            const canvas = document.getElementById('averageCanvas');
+            canvas.width = img.clientWidth;
+            canvas.height = img.clientHeight;
+        }
+
+        // 渲染平均attention
+        function renderAverageAttention(tokenIdx = null, layerHead = null) {
+            const canvas = document.getElementById('averageCanvas');
+            const ctx = canvas.getContext('2d');
+            ctx.clearRect(0, 0, canvas.width, canvas.height);
+
+            // 如果没有指定tokenIdx，尝试使用当前选中的token，否则使用0
+            let displayTokenIdx = tokenIdx !== null ? tokenIdx : (currentTokenIdx !== null ? currentTokenIdx : pinnedTokenIdx);
+            if (displayTokenIdx === null) {
+                displayTokenIdx = 0; // 使用第一个output token作为默认
+            }
+
+            const [imageH, imageW] = attentionData.imageSize;
+            let attMap;
+            
+            // 更新标题和按钮
+            const titleEl = document.getElementById('averageTitle');
+            const resetBtn = document.getElementById('resetAverageBtn');
+            
+            if (layerHead !== null) {
+                // 显示特定layer/head的attention
+                const { layer, head } = layerHead;
+                const shape = attentionData.data.shape;
+                const idx = displayTokenIdx * shape[1] * shape[2] * shape[3] * shape[4] +
+                           layer * shape[2] * shape[3] * shape[4] +
+                           head * shape[3] * shape[4];
+                attMap = attentionData.data.data.slice(idx, idx + imageH * imageW);
+                titleEl.textContent = `🔍 Layer ${layer} Head ${head} Attention Map`;
+                resetBtn.classList.remove('hidden');
+            } else if (selectedLayer !== null) {
+                // 显示特定layer的平均attention（所有heads的平均）
+                attMap = calculateLayerAverageAttention(selectedLayer, displayTokenIdx);
+                titleEl.textContent = `📊 Layer ${selectedLayer} 平均 Attention Map`;
+                resetBtn.classList.remove('hidden');
+            } else {
+                // 显示全局平均attention
+                const offset = displayTokenIdx * imageH * imageW;
+                attMap = attentionData.averageData.data.slice(offset, offset + imageH * imageW);
+                titleEl.textContent = `📊 平均 Attention Map`;
+                resetBtn.classList.add('hidden');
+            }
+
+            // 渲染热力图
+            renderHeatmap(ctx, attMap, imageH, imageW, canvas.width, canvas.height);
+        }
+
+        // 计算某个layer的平均attention（所有heads的平均）
+        function calculateLayerAverageAttention(layer, tokenIdx) {
+            const [imageH, imageW] = attentionData.imageSize;
+            const shape = attentionData.data.shape;
+            const totalPixels = imageH * imageW;
+            const result = new Float32Array(totalPixels);
+            
+            // 对所有heads求和
+            for (let head = 0; head < attentionData.heads; head++) {
+                const idx = tokenIdx * shape[1] * shape[2] * shape[3] * shape[4] +
+                           layer * shape[2] * shape[3] * shape[4] +
+                           head * shape[3] * shape[4];
+                
+                for (let i = 0; i < totalPixels; i++) {
+                    result[i] += attentionData.data.data[idx + i];
+                }
+            }
+            
+            // 求平均
+            for (let i = 0; i < totalPixels; i++) {
+                result[i] /= attentionData.heads;
+            }
+            
+            return result;
+        }
+
+        // 渲染热力图
+        function renderHeatmap(ctx, attMap, mapH, mapW, canvasW, canvasH) {
+            const cellW = canvasW / mapW;
+            const cellH = canvasH / mapH;
+
+            // 计算当前数据的min/max（用于自动对比度）
+            let dataMin = colorMin;
+            let dataMax = colorMax;
+            
+            if (autoContrast) {
+                dataMin = Math.min(...attMap);
+                dataMax = Math.max(...attMap);
+                if (dataMin === dataMax) dataMax = dataMin + 1;
+            }
+
+            for (let i = 0; i < mapH; i++) {
+                for (let j = 0; j < mapW; j++) {
+                    const value = attMap[i * mapW + j];
+                    
+                    // 映射到色彩范围
+                    const normalizedValue = (value - dataMin) / (dataMax - dataMin);
+                    const clampedValue = Math.max(0, Math.min(1, normalizedValue));
+                    
+                    // 热力图颜色
+                    const color = getHeatmapColor(clampedValue);
+                    ctx.fillStyle = color;
+                    ctx.fillRect(j * cellW, i * cellH, cellW, cellH);
+                }
+            }
+        }
+
+        // 获取热力图颜色
+        function getHeatmapColor(value) {
+            const h = (1 - value) * 240; // 240(蓝) -> 0(红)
+            return `hsla(${h}, 100%, 50%, 0.6)`;
+        }
+
+        // 渲染Layer按钮
+        function renderLayerButtons(tokenIdx = null) {
+            const container = document.getElementById('layerButtons');
+            container.innerHTML = '';
+            
+            // 使用当前显示的token（如果有的话）
+            const displayTokenIdx = tokenIdx !== null ? tokenIdx : (currentTokenIdx !== null ? currentTokenIdx : pinnedTokenIdx);
+
+            for (let layer = 0; layer < attentionData.layers; layer++) {
+                const btn = document.createElement('button');
+                btn.className = 'layer-btn';
+                btn.textContent = `Layer ${layer}`;
+                btn.dataset.layer = layer;
+                
+                // 计算该layer的颜色（基于当前token或默认token）
+                const avgIntensity = calculateLayerMaxIntensity(layer, displayTokenIdx !== null ? displayTokenIdx : 0);
+                const color = getHeatmapColor(avgIntensity);
+                btn.style.background = color.replace('0.6)', '1)'); // 不透明
+                
+                if (layer === currentLayer) {
+                    btn.classList.add('active');
+                }
+                
+                btn.addEventListener('click', () => {
+                    currentLayer = layer;
+                    selectedLayer = layer; // 设置选中的layer
+                    renderLayerButtons(displayTokenIdx);
+                    renderLayersGrid(); // 重新渲染grid显示新layer的heads
+                    
+                    // 获取显示用的tokenIdx，如果没有选中token则使用0
+                    let activeTokenIdx = currentTokenIdx !== null ? currentTokenIdx : pinnedTokenIdx;
+                    if (activeTokenIdx === null) {
+                        activeTokenIdx = 0; // 使用第一个output token
+                    }
+                    
+                    updateLayersGrid(activeTokenIdx);
+                    
+                    // 更新平均attention map显示为该layer的平均
+                    renderAverageAttention(activeTokenIdx, null);
+                    
+                    // 更新输出文本颜色基于当前layer
+                    updateOutputTextColors(layer, null);
+                });
+                
+                container.appendChild(btn);
+            }
+        }
+
+        // 计算layer的最大强度（针对特定token）
+        function calculateLayerMaxIntensity(layer, tokenIdx) {
+            // 计算该layer所有heads的最大值
+            if (!attentionData.data || !attentionData.data.data) return 0.5;
+            
+            const [imageH, imageW] = attentionData.imageSize;
+            const shape = attentionData.data.shape;
+            
+            let maxVal = 0;
+            
+            for (let head = 0; head < attentionData.heads; head++) {
+                const idx = tokenIdx * shape[1] * shape[2] * shape[3] * shape[4] +
+                           layer * shape[2] * shape[3] * shape[4] +
+                           head * shape[3] * shape[4];
+                
+                for (let i = 0; i < imageH * imageW; i++) {
+                    const val = attentionData.data.data[idx + i];
+                    if (val > maxVal) maxVal = val;
+                }
+            }
+            
+            return maxVal / 100.0; // 归一化到0-1
+        }
+
+        // 渲染层级grid - 只显示当前layer的所有heads
+        function renderLayersGrid() {
+            const grid = document.getElementById('layersGrid');
+            grid.innerHTML = '';
+
+            const [imageH, imageW] = attentionData.imageSize;
+
+            // 只渲染当前layer的heads
+            for (let head = 0; head < attentionData.heads; head++) {
+                const item = document.createElement('div');
+                item.className = 'layer-item';
+                item.dataset.layer = currentLayer;
+                item.dataset.head = head;
+
+                const canvas = document.createElement('canvas');
+                canvas.width = 200;
+                canvas.height = 200 * (imageH / imageW);
+                
+                const label = document.createElement('div');
+                label.className = 'layer-label';
+                label.textContent = `L${currentLayer}H${head}`;
+
+                item.appendChild(canvas);
+                item.appendChild(label);
+                grid.appendChild(item);
+
+                // 添加hover事件
+                item.addEventListener('mouseenter', () => {
+                    hoveredLayerHead = { layer: currentLayer, head: head };
+                    
+                    // 获取显示用的tokenIdx
+                    let displayTokenIdx = currentTokenIdx !== null ? currentTokenIdx : pinnedTokenIdx;
+                    if (displayTokenIdx === null) {
+                        displayTokenIdx = 0;
+                    }
+                    
+                    renderAverageAttention(displayTokenIdx, hoveredLayerHead);
+                    
+                    // 更新输出文本颜色基于当前layer和head
+                    updateOutputTextColors(currentLayer, head);
+                });
+
+                item.addEventListener('mouseleave', () => {
+                    hoveredLayerHead = null;
+                    
+                    // 获取显示用的tokenIdx
+                    let displayTokenIdx = currentTokenIdx !== null ? currentTokenIdx : pinnedTokenIdx;
+                    if (displayTokenIdx === null) {
+                        displayTokenIdx = 0;
+                    }
+                    
+                    renderAverageAttention(displayTokenIdx, null);
+                    
+                    // 恢复为当前layer的颜色（不包括head）
+                    if (useCustomColors) {
+                        updateOutputTextColors(currentLayer, null);
+                    } else {
+                        updateOutputTextColors(null, null);
+                    }
+                });
+
+                // 初始化空白
+                const ctx = canvas.getContext('2d');
+                ctx.fillStyle = '#000';
+                ctx.fillRect(0, 0, canvas.width, canvas.height);
+            }
+        }
+
+        // 更新层级grid的attention - 只更新当前layer
+        function updateLayersGrid(tokenIdx) {
+            // 如果tokenIdx为null，使用默认值0
+            if (tokenIdx === null) {
+                tokenIdx = 0;
+            }
+
+            const [imageH, imageW] = attentionData.imageSize;
+            const shape = attentionData.data.shape;
+
+            document.querySelectorAll('.layer-item').forEach(item => {
+                const layer = parseInt(item.dataset.layer);
+                const head = parseInt(item.dataset.head);
+                const canvas = item.querySelector('canvas');
+                const ctx = canvas.getContext('2d');
+
+                // 计算索引: [tokenIdx, layer, head, imageH, imageW]
+                const idx = tokenIdx * shape[1] * shape[2] * shape[3] * shape[4] +
+                           layer * shape[2] * shape[3] * shape[4] +
+                           head * shape[3] * shape[4];
+                
+                const attMap = attentionData.data.data.slice(idx, idx + imageH * imageW);
+                
+                ctx.clearRect(0, 0, canvas.width, canvas.height);
+                renderHeatmap(ctx, attMap, imageH, imageW, canvas.width, canvas.height);
+            });
+        }
+
+        // 渲染文本
+        function renderText() {
+            // 输入文本
+            document.getElementById('inputText').textContent = metadata.input.text;
+
+            // 输出文本 - 根据char_range在完整文本上标记
+            const outputContainer = document.getElementById('outputText');
+            outputContainer.innerHTML = '';
+
+            const fullOutputText = metadata.output.text;
+            
+            // 收集所有output token的char_range和average_attention
+            const outputTokens = metadata.token_mappings.filter(t => t.type === 'output' && t.char_range);
+            
+            // 使用原始average_attention
+            const attentionValues = outputTokens.map(t => t.average_attention || 0);
+            const minAtt = Math.min(...attentionValues);
+            const maxAtt = Math.max(...attentionValues);
+            const attRange = maxAtt - minAtt || 1;
+            
+            // 按char_range排序
+            outputTokens.sort((a, b) => a.char_range[0] - b.char_range[0]);
+            
+            // 构建带标记的HTML
+            let lastPos = 0;
+            outputTokens.forEach(token => {
+                const [start, end] = token.char_range;
+                
+                // 添加之前未标记的文本
+                if (start > lastPos) {
+                    const text = fullOutputText.substring(lastPos, start);
+                    outputContainer.appendChild(document.createTextNode(text));
+                }
+                
+                // 添加标记的token
+                const span = document.createElement('span');
+                span.className = 'token output-token';
+                span.textContent = fullOutputText.substring(start, end);
+                span.dataset.tokenIdx = token.output_token_idx;
+                
+                // 使用自适应scaling设置背景色
+                const avgAtt = token.average_attention || 0;
+                const normalizedAtt = (avgAtt - minAtt) / attRange;
+                span.style.backgroundColor = `rgba(255, 193, 7, ${normalizedAtt * 0.7})`;
+                
+                outputContainer.appendChild(span);
+                lastPos = end;
+            });
+            
+            // 添加剩余文本
+            if (lastPos < fullOutputText.length) {
+                const text = fullOutputText.substring(lastPos);
+                outputContainer.appendChild(document.createTextNode(text));
+            }
+        }
+
+        // 计算特定layer或layer/head下每个token的attention平均值
+        function calculateTokenAttentionsForLayer(layer, head = null) {
+            const [imageH, imageW] = attentionData.imageSize;
+            const shape = attentionData.data.shape;
+            const outputTokens = metadata.token_mappings.filter(t => t.type === 'output');
+            
+            const attentions = [];
+            
+            outputTokens.forEach(token => {
+                const tokenIdx = token.output_token_idx;
+                let sum = 0;
+                let count = 0;
+                
+                if (head !== null) {
+                    // 特定head
+                    const idx = tokenIdx * shape[1] * shape[2] * shape[3] * shape[4] +
+                               layer * shape[2] * shape[3] * shape[4] +
+                               head * shape[3] * shape[4];
+                    
+                    for (let i = 0; i < imageH * imageW; i++) {
+                        sum += attentionData.data.data[idx + i];
+                        count++;
+                    }
+                } else {
+                    // 整个layer的所有heads平均
+                    for (let h = 0; h < attentionData.heads; h++) {
+                        const idx = tokenIdx * shape[1] * shape[2] * shape[3] * shape[4] +
+                                   layer * shape[2] * shape[3] * shape[4] +
+                                   h * shape[3] * shape[4];
+                        
+                        for (let i = 0; i < imageH * imageW; i++) {
+                            sum += attentionData.data.data[idx + i];
+                            count++;
+                        }
+                    }
+                }
+                
+                attentions.push(count > 0 ? sum / count : 0);
+            });
+            
+            return attentions;
+        }
+
+        // 更新输出文本的背景色
+        function updateOutputTextColors(layer = null, head = null) {
+            const outputTokens = document.querySelectorAll('.output-token');
+            if (outputTokens.length === 0) return;
+            
+            let attentions;
+            
+            if (layer !== null) {
+                // 使用自定义layer/head计算
+                attentions = calculateTokenAttentionsForLayer(layer, head);
+                useCustomColors = true;
+                document.getElementById('resetColorBtn').classList.remove('hidden');
+            } else {
+                // 使用原始average_attention
+                const outputTokensData = metadata.token_mappings.filter(t => t.type === 'output' && t.char_range);
+                attentions = outputTokensData.map(t => t.average_attention || 0);
+                useCustomColors = false;
+                document.getElementById('resetColorBtn').classList.add('hidden');
+            }
+            
+            // 自适应scaling（最大对比度）
+            const minAtt = Math.min(...attentions);
+            const maxAtt = Math.max(...attentions);
+            const attRange = maxAtt - minAtt || 1;
+            
+            outputTokens.forEach((span, idx) => {
+                if (idx < attentions.length) {
+                    const normalizedAtt = (attentions[idx] - minAtt) / attRange;
+                    span.style.backgroundColor = `rgba(255, 193, 7, ${normalizedAtt * 0.7})`;
+                }
+            });
+        }
+
+        // 设置事件监听
+        function setupEventListeners() {
+            // 色彩范围滑块
+            document.getElementById('colorMin').addEventListener('input', (e) => {
+                colorMin = parseInt(e.target.value);
+                document.getElementById('colorMinValue').textContent = colorMin;
+                updateAllVisualizations();
+            });
+
+            document.getElementById('colorMax').addEventListener('input', (e) => {
+                colorMax = parseInt(e.target.value);
+                document.getElementById('colorMaxValue').textContent = colorMax;
+                updateAllVisualizations();
+            });
+
+            // 自动对比度开关
+            document.getElementById('autoContrastSwitch').addEventListener('change', (e) => {
+                autoContrast = e.target.checked;
+                updateAllVisualizations();
+            });
+
+            // 复原按钮
+            document.getElementById('resetColorBtn').addEventListener('click', () => {
+                updateOutputTextColors(null, null);
+            });
+
+            // 复原平均attention map按钮
+            document.getElementById('resetAverageBtn').addEventListener('click', () => {
+                selectedLayer = null;
+                
+                // 获取显示用的tokenIdx，如果没有选中token则使用0
+                let displayTokenIdx = currentTokenIdx !== null ? currentTokenIdx : pinnedTokenIdx;
+                if (displayTokenIdx === null) {
+                    displayTokenIdx = 0; // 使用第一个output token
+                }
+                
+                renderAverageAttention(displayTokenIdx, null);
+            });
+
+            // 输出token悬浮和点击事件
+            const outputContainer = document.getElementById('outputText');
+            
+            outputContainer.addEventListener('mouseover', (e) => {
+                if (e.target.classList.contains('output-token') && pinnedTokenIdx === null) {
+                    const tokenIdx = parseInt(e.target.dataset.tokenIdx);
+                    highlightToken(tokenIdx);
+                }
+            });
+
+            outputContainer.addEventListener('mouseout', () => {
+                if (pinnedTokenIdx === null) {
+                    clearHighlight();
+                }
+            });
+
+            outputContainer.addEventListener('click', (e) => {
+                if (e.target.classList.contains('output-token')) {
+                    const tokenIdx = parseInt(e.target.dataset.tokenIdx);
+                    togglePin(tokenIdx);
+                }
+            });
+        }
+
+        // 更新所有可视化
+        function updateAllVisualizations() {
+            const displayTokenIdx = currentTokenIdx !== null ? currentTokenIdx : pinnedTokenIdx;
+            if (displayTokenIdx !== null) {
+                renderAverageAttention(displayTokenIdx, hoveredLayerHead);
+                updateLayersGrid(displayTokenIdx);
+            }
+            renderLayerButtons(displayTokenIdx); // 更新layer按钮颜色，传入当前token
+        }
+
+        // 固定/取消固定token
+        function togglePin(tokenIdx) {
+            if (pinnedTokenIdx === tokenIdx) {
+                // 取消固定
+                pinnedTokenIdx = null;
+                document.querySelectorAll('.output-token').forEach(el => {
+                    el.classList.remove('pinned');
+                });
+                clearHighlight();
+            } else {
+                // 固定到新token
+                pinnedTokenIdx = tokenIdx;
+                document.querySelectorAll('.output-token').forEach(el => {
+                    el.classList.remove('pinned');
+                    if (parseInt(el.dataset.tokenIdx) === tokenIdx) {
+                        el.classList.add('pinned');
+                    }
+                });
+                highlightToken(tokenIdx);
+            }
+        }
+
+        // 高亮token
+        function highlightToken(tokenIdx) {
+            currentTokenIdx = tokenIdx;
+            
+            // 更新active状态
+            document.querySelectorAll('.output-token').forEach(el => {
+                el.classList.remove('active');
+                if (parseInt(el.dataset.tokenIdx) === tokenIdx) {
+                    el.classList.add('active');
+                }
+            });
+
+            // 更新attention显示
+            renderAverageAttention(tokenIdx, hoveredLayerHead);
+            updateLayersGrid(tokenIdx);
+            renderLayerButtons(tokenIdx); // 更新layer按钮颜色
+        }
+
+        // 清除高亮
+        function clearHighlight() {
+            if (pinnedTokenIdx !== null) return; // 如果有固定的token，不清除
+            
+            currentTokenIdx = null;
+            document.querySelectorAll('.output-token').forEach(el => {
+                el.classList.remove('active');
+            });
+            
+            const canvas = document.getElementById('averageCanvas');
+            const ctx = canvas.getContext('2d');
+            ctx.clearRect(0, 0, canvas.width, canvas.height);
+        }
+
+        // 显示错误
+        function showError(message) {
+            document.getElementById('loading').style.display = 'none';
+            document.getElementById('error').textContent = message;
+            document.getElementById('error').style.display = 'block';
+        }
+
+        // 启动
+        init();
+    </script>
+</body>
+</html>
