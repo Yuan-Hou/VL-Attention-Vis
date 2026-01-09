@@ -25,11 +25,47 @@
             position: sticky;
             top: 0;
             z-index: 100;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 20px;
         }
 
         .header h1 {
             font-size: 24px;
             color: #4fc3f7;
+            margin: 0;
+        }
+
+        .file-selector {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .file-selector input {
+            background: #1a1a1a;
+            color: #e0e0e0;
+            border: 1px solid #4fc3f7;
+            padding: 6px 12px;
+            border-radius: 4px;
+            font-size: 13px;
+            min-width: 250px;
+        }
+
+        .file-selector button {
+            background: #4fc3f7;
+            color: white;
+            border: none;
+            padding: 6px 16px;
+            border-radius: 4px;
+            cursor: pointer;
+            font-size: 13px;
+            transition: background 0.2s;
+        }
+
+        .file-selector button:hover {
+            background: #29b6f6;
         }
 
         .container {
@@ -123,19 +159,19 @@
 
         .layers-grid {
             display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(120px, 1fr));
-            gap: 8px;
+            grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+            gap: 12px;
             margin-top: 10px;
         }
 
         .layer-item {
             position: relative;
-            aspect-ratio: 16/9;
             background: #1a1a1a;
             border-radius: 4px;
             overflow: hidden;
             cursor: pointer;
             transition: transform 0.2s;
+            min-height: 200px;
         }
 
         .layer-item:hover {
@@ -143,10 +179,12 @@
             z-index: 10;
         }
 
-        .layer-item img {
+        .layer-item img,
+        .layer-item canvas {
             width: 100%;
-            height: 100%;
-            object-fit: cover;
+            height: auto;
+            object-fit: contain;
+            display: block;
         }
 
         .layer-label {
@@ -226,10 +264,12 @@
             border-radius: 3px;
             cursor: pointer;
             transition: all 0.2s;
+            text-shadow: 0 1px 2px rgba(0, 0, 0, 0.8);
         }
 
         .token.output-token {
             cursor: pointer;
+            color: #fff;
         }
 
         .token.output-token:hover {
@@ -239,7 +279,9 @@
         }
 
         .token.active {
-            outline: 2px solid #ff5722;
+            box-shadow: 0 0 0 3px #ff5722, 0 0 10px rgba(255, 87, 34, 0.5);
+            transform: scale(1.08);
+            font-weight: bold;
         }
 
         /* 加载状态 */
@@ -284,6 +326,34 @@
             margin-bottom: 10px;
             font-size: 13px;
             color: #b0b0b0;
+        }
+
+        /* Token选择提示 */
+        .token-indicator {
+            background: rgba(255, 193, 7, 0.15);
+            border-left: 3px solid #ffc107;
+            padding: 8px 12px;
+            margin-bottom: 8px;
+            border-radius: 4px;
+            font-size: 12px;
+            color: #ffc107;
+            height: 32px;
+            opacity: 0;
+            transition: opacity 0.2s;
+            overflow: hidden;
+        }
+
+        .token-indicator.active {
+            opacity: 1;
+        }
+
+        .token-indicator .token-text {
+            font-weight: bold;
+            color: #fff;
+            background: rgba(255, 193, 7, 0.3);
+            padding: 2px 6px;
+            border-radius: 3px;
+            margin: 0 4px;
         }
 
         .info-bar strong {
@@ -440,16 +510,136 @@
             transform: scale(1.05);
         }
 
+        /* Layer滑块样式 */
+        .layer-slider-container {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+            margin-top: 10px;
+        }
+
+        .layer-slider-wrapper {
+            flex: 1;
+            position: relative;
+            height: 60px;
+            padding-top: 5px;
+        }
+
+        #layerSlider {
+            width: 100%;
+            height: 8px;
+            -webkit-appearance: none;
+            appearance: none;
+            background: rgba(255,255,255,0.1);
+            border-radius: 4px;
+            outline: none;
+            position: absolute;
+            top: 38px;
+            z-index: 2;
+            cursor: pointer;
+        }
+
+        #layerSlider::-webkit-slider-thumb {
+            -webkit-appearance: none;
+            appearance: none;
+            width: 24px;
+            height: 24px;
+            background: white;
+            border: 4px solid #4fc3f7;
+            border-radius: 50%;
+            cursor: grab;
+            box-shadow: 0 3px 6px rgba(0,0,0,0.4);
+            transition: transform 0.1s;
+        }
+
+        #layerSlider::-webkit-slider-thumb:hover {
+            transform: scale(1.1);
+        }
+
+        #layerSlider::-webkit-slider-thumb:active {
+            cursor: grabbing;
+            transform: scale(1.15);
+        }
+
+        #layerSlider::-moz-range-thumb {
+            width: 24px;
+            height: 24px;
+            background: white;
+            border: 4px solid #4fc3f7;
+            border-radius: 50%;
+            cursor: grab;
+            box-shadow: 0 3px 6px rgba(0,0,0,0.4);
+            transition: transform 0.1s;
+        }
+
+        #layerSlider::-moz-range-thumb:hover {
+            transform: scale(1.1);
+        }
+
+        #layerSlider::-moz-range-thumb:active {
+            cursor: grabbing;
+            transform: scale(1.15);
+        }
+
+        .layer-ticks {
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 60px;
+            display: flex;
+            justify-content: space-between;
+            pointer-events: none;
+        }
+
+        .layer-tick {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+
+        .layer-tick-mark {
+            width: 32px;
+            height: 32px;
+            border-radius: 5px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 12px;
+            font-weight: bold;
+            color: white;
+            margin-bottom: 5px;
+            transition: all 0.2s;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.3);
+        }
+
+        .layer-value-display {
+            min-width: 110px;
+            text-align: center;
+            font-size: 18px;
+            font-weight: bold;
+            color: #4fc3f7;
+            background: rgba(79, 195, 247, 0.1);
+            padding: 8px 16px;
+            border-radius: 6px;
+            border: 2px solid rgba(79, 195, 247, 0.3);
+        }
+
         /* Token固定状态 */
         .token.pinned {
-            outline: 3px solid #ff5722;
-            background: rgba(255, 87, 34, 0.2) !important;
+            box-shadow: 0 0 0 3px #ff5722, 0 0 15px rgba(255, 87, 34, 0.6);
+            font-weight: bold;
+            transform: scale(1.08);
         }
     </style>
 </head>
 <body>
     <div class="header">
         <h1>🔍 Vision-Language Attention 可视化</h1>
+        <div class="file-selector">
+            <input type="text" id="filePathInput" placeholder="输入文件路径 (e.g., attention_output.json)" value="attention_output.json">
+            <button id="loadFileBtn">📂 加载</button>
+        </div>
     </div>
 
     <div id="loading" class="loading">
@@ -496,7 +686,15 @@
 
             <div class="control-group">
                 <label>📚 选择Layer</label>
-                <div id="layerButtons" class="layer-buttons"></div>
+                <div class="layer-slider-container">
+                    <div class="layer-slider-wrapper">
+                        <div class="layer-ticks" id="layerTicks"></div>
+                        <input type="range" id="layerSlider" min="0" max="0" value="0" step="1">
+                    </div>
+                    <div class="layer-value-display">
+                        Layer <span id="layerValue">0</span>
+                    </div>
+                </div>
             </div>
         </div>
 
@@ -504,6 +702,10 @@
             <!-- 左侧：平均attention -->
             <div class="panel average-panel">
                 <div class="panel-title" id="averageTitle">📊 平均 Attention Map</div>
+                <div class="token-indicator" id="averageTokenIndicator">
+                    <span>📌 选中Token:</span>
+                    <span class="token-text" id="averageTokenText"></span>
+                </div>
                 <button id="resetAverageBtn" class="panel-reset-btn hidden" title="恢复全局平均">↺ 复原</button>
                 <div class="image-container">
                     <img id="averageImage" class="base-image" alt="图像">
@@ -514,6 +716,10 @@
             <!-- 右侧：层级grid -->
             <div class="panel layers-panel">
                 <div class="panel-title">🗂️ 各层 Attention Maps (Layers × Heads)</div>
+                <div class="token-indicator" id="layersTokenIndicator">
+                    <span>📌 选中Token:</span>
+                    <span class="token-text" id="layersTokenText"></span>
+                </div>
                 <div id="layersGrid" class="layers-grid"></div>
             </div>
 
@@ -554,6 +760,15 @@
         // 初始化
         async function init() {
             try {
+                // 从 URL 参数或输入框获取文件路径
+                const urlParams = new URLSearchParams(window.location.search);
+                const fileParam = urlParams.get('file');
+                const filePathInput = document.getElementById('filePathInput');
+                
+                if (fileParam) {
+                    filePathInput.value = fileParam;
+                }
+                
                 await loadData();
                 renderUI();
                 setupEventListeners();
@@ -568,8 +783,19 @@
 
         // 加载数据
         async function loadData() {
+            const filePath = document.getElementById('filePathInput').value.trim();
+            if (!filePath) {
+                throw new Error('请输入文件路径');
+            }
+            
+            // 构建完整路径
+            const jsonPath = filePath.startsWith('../') || filePath.startsWith('/') ? filePath : `../data/${filePath}`;
+            
             // 加载JSON元数据
-            const jsonResponse = await fetch('../data/attention_output.json');
+            const jsonResponse = await fetch(jsonPath);
+            if (!jsonResponse.ok) {
+                throw new Error(`无法加载文件: ${jsonPath}`);
+            }
             metadata = await jsonResponse.json();
 
             // 加载NPZ attention数据
@@ -612,6 +838,34 @@
                 minVal: minVal,
                 maxVal: maxVal
             };
+        }
+
+        // 将float16转换为float32
+        function float16ToFloat32(h) {
+            const sign = (h & 0x8000) >> 15;
+            const exponent = (h & 0x7C00) >> 10;
+            const fraction = h & 0x03FF;
+            
+            if (exponent === 0) {
+                if (fraction === 0) {
+                    // ±0
+                    return sign ? -0 : 0;
+                } else {
+                    // 非规格化数
+                    return (sign ? -1 : 1) * Math.pow(2, -14) * (fraction / 1024);
+                }
+            } else if (exponent === 0x1F) {
+                if (fraction === 0) {
+                    // ±Infinity
+                    return sign ? -Infinity : Infinity;
+                } else {
+                    // NaN
+                    return NaN;
+                }
+            }
+            
+            // 规格化数
+            return (sign ? -1 : 1) * Math.pow(2, exponent - 15) * (1 + fraction / 1024);
         }
 
         // 简化的NPY解析器
@@ -664,6 +918,13 @@
                 } else if (dtype === '<i8' || dtype === 'i8') {
                     // int64
                     data = new BigInt64Array(npyBytes.buffer, npyBytes.byteOffset + offset, totalElements);
+                } else if (dtype === '<f2' || dtype === 'f2') {
+                    // float16 - 需要手动转换为float32
+                    const uint16Data = new Uint16Array(npyBytes.buffer, npyBytes.byteOffset + offset, totalElements);
+                    data = new Float32Array(totalElements);
+                    for (let i = 0; i < totalElements; i++) {
+                        data[i] = float16ToFloat32(uint16Data[i]);
+                    }
                 } else if (dtype === '<f4' || dtype === 'f4') {
                     // float32
                     data = new Float32Array(npyBytes.buffer, npyBytes.byteOffset + offset, totalElements);
@@ -702,7 +963,7 @@
             document.getElementById('headCount').textContent = attentionData.heads;
 
             // 渲染layer按钮
-            renderLayerButtons();
+            renderLayerSlider();
 
             // 设置图片
             const img = document.getElementById('averageImage');
@@ -840,52 +1101,65 @@
             return `hsla(${h}, 100%, 50%, 0.6)`;
         }
 
-        // 渲染Layer按钮
-        function renderLayerButtons(tokenIdx = null) {
-            const container = document.getElementById('layerButtons');
-            container.innerHTML = '';
+        // 渲染Layer滑块
+        function renderLayerSlider(tokenIdx = null) {
+            const slider = document.getElementById('layerSlider');
+            const valueDisplay = document.getElementById('layerValue');
+            const ticksContainer = document.getElementById('layerTicks');
+            
+            // 初始化滑块
+            slider.max = attentionData.layers - 1;
+            slider.value = currentLayer;
+            valueDisplay.textContent = currentLayer;
             
             // 使用当前显示的token（如果有的话）
             const displayTokenIdx = tokenIdx !== null ? tokenIdx : (currentTokenIdx !== null ? currentTokenIdx : pinnedTokenIdx);
-
+            
+            // 渲染刻度
+            ticksContainer.innerHTML = '';
             for (let layer = 0; layer < attentionData.layers; layer++) {
-                const btn = document.createElement('button');
-                btn.className = 'layer-btn';
-                btn.textContent = `Layer ${layer}`;
-                btn.dataset.layer = layer;
+                const tick = document.createElement('div');
+                tick.className = 'layer-tick';
+                
+                const mark = document.createElement('div');
+                mark.className = 'layer-tick-mark';
+                mark.textContent = layer;
                 
                 // 计算该layer的颜色（基于当前token或默认token）
                 const avgIntensity = calculateLayerMaxIntensity(layer, displayTokenIdx !== null ? displayTokenIdx : 0);
                 const color = getHeatmapColor(avgIntensity);
-                btn.style.background = color.replace('0.6)', '1)'); // 不透明
+                mark.style.background = color.replace('0.6)', '1)'); // 不透明
                 
                 if (layer === currentLayer) {
-                    btn.classList.add('active');
+                    mark.style.outline = '2px solid white';
+                    mark.style.transform = 'scale(1.15)';
                 }
                 
-                btn.addEventListener('click', () => {
-                    currentLayer = layer;
-                    selectedLayer = layer; // 设置选中的layer
-                    renderLayerButtons(displayTokenIdx);
-                    renderLayersGrid(); // 重新渲染grid显示新layer的heads
-                    
-                    // 获取显示用的tokenIdx，如果没有选中token则使用0
-                    let activeTokenIdx = currentTokenIdx !== null ? currentTokenIdx : pinnedTokenIdx;
-                    if (activeTokenIdx === null) {
-                        activeTokenIdx = 0; // 使用第一个output token
-                    }
-                    
-                    updateLayersGrid(activeTokenIdx);
-                    
-                    // 更新平均attention map显示为该layer的平均
-                    renderAverageAttention(activeTokenIdx, null);
-                    
-                    // 更新输出文本颜色基于当前layer
-                    updateOutputTextColors(layer, null);
-                });
-                
-                container.appendChild(btn);
+                tick.appendChild(mark);
+                ticksContainer.appendChild(tick);
             }
+            
+            // 滑块change事件
+            slider.oninput = function() {
+                const layer = parseInt(this.value);
+                currentLayer = layer;
+                selectedLayer = layer;
+                valueDisplay.textContent = layer;
+                renderLayerSlider(displayTokenIdx);
+                renderLayersGrid(); // 重新渲染grid显示新layer的heads
+                
+                // 获取显示用的tokenIdx
+                let activeTokenIdx = displayTokenIdx !== null ? displayTokenIdx : 0;
+                
+                // 更新grid的attention数据
+                updateLayersGrid(activeTokenIdx);
+                
+                // 更新输出文本颜色（基于当前layer）
+                updateOutputTextColors(layer, null);
+                
+                // 更新平均attention map (使用当前layer)
+                renderAverageAttention(activeTokenIdx, null);
+            };
         }
 
         // 计算layer的最大强度（针对特定token）
@@ -927,8 +1201,8 @@
                 item.dataset.head = head;
 
                 const canvas = document.createElement('canvas');
-                canvas.width = 200;
-                canvas.height = 200 * (imageH / imageW);
+                canvas.width = 300;
+                canvas.height = 300 * (imageH / imageW);
                 
                 const label = document.createElement('div');
                 label.className = 'layer-label';
@@ -1051,7 +1325,8 @@
                 // 使用自适应scaling设置背景色
                 const avgAtt = token.average_attention || 0;
                 const normalizedAtt = (avgAtt - minAtt) / attRange;
-                span.style.backgroundColor = `rgba(255, 193, 7, ${normalizedAtt * 0.7})`;
+                const alpha = 0.25 + normalizedAtt * 0.6; // 范围从0.25到0.85
+                span.style.backgroundColor = `rgba(255, 193, 7, ${alpha})`;
                 
                 outputContainer.appendChild(span);
                 lastPos = end;
@@ -1135,23 +1410,67 @@
             outputTokens.forEach((span, idx) => {
                 if (idx < attentions.length) {
                     const normalizedAtt = (attentions[idx] - minAtt) / attRange;
-                    span.style.backgroundColor = `rgba(255, 193, 7, ${normalizedAtt * 0.7})`;
+                    // 使用适中的不透明度范围，既醒目又不影响可读性
+                    const alpha = 0.25 + normalizedAtt * 0.6; // 范围从0.25到0.85
+                    span.style.backgroundColor = `rgba(255, 193, 7, ${alpha})`;
                 }
             });
         }
 
         // 设置事件监听
         function setupEventListeners() {
+            // 文件加载按钮
+            document.getElementById('loadFileBtn').addEventListener('click', async () => {
+                const app = document.getElementById('app');
+                const loading = document.getElementById('loading');
+                const error = document.getElementById('error');
+                
+                app.style.display = 'none';
+                error.style.display = 'none';
+                loading.style.display = 'block';
+                
+                try {
+                    await loadData();
+                    renderUI();
+                    loading.style.display = 'none';
+                    app.style.display = 'block';
+                } catch (err) {
+                    showError('加载失败: ' + err.message);
+                    console.error(err);
+                }
+            });
+            
+            // 文件路径输入框回车键
+            document.getElementById('filePathInput').addEventListener('keypress', (e) => {
+                if (e.key === 'Enter') {
+                    document.getElementById('loadFileBtn').click();
+                }
+            });
+            
             // 色彩范围滑块
             document.getElementById('colorMin').addEventListener('input', (e) => {
                 colorMin = parseInt(e.target.value);
                 document.getElementById('colorMinValue').textContent = colorMin;
+                
+                // 自动关闭最大对比度模式
+                if (autoContrast) {
+                    autoContrast = false;
+                    document.getElementById('autoContrastSwitch').checked = false;
+                }
+                
                 updateAllVisualizations();
             });
 
             document.getElementById('colorMax').addEventListener('input', (e) => {
                 colorMax = parseInt(e.target.value);
                 document.getElementById('colorMaxValue').textContent = colorMax;
+                
+                // 自动关闭最大对比度模式
+                if (autoContrast) {
+                    autoContrast = false;
+                    document.getElementById('autoContrastSwitch').checked = false;
+                }
+                
                 updateAllVisualizations();
             });
 
@@ -1201,6 +1520,22 @@
                     togglePin(tokenIdx);
                 }
             });
+
+            // 键盘方向键
+            document.addEventListener('keydown', (e) => {
+                if (e.key === 'ArrowLeft' || e.key === 'ArrowRight') {
+                    e.preventDefault();
+                    navigateToken(e.key === 'ArrowLeft' ? -1 : 1);
+                } else if (e.key === 'ArrowUp' || e.key === 'ArrowDown') {
+                    e.preventDefault();
+                    navigateLayer(e.key === 'ArrowUp' ? -1 : 1);
+                } else if (e.key === 'Escape') {
+                    // ESC键取消固定
+                    if (pinnedTokenIdx !== null) {
+                        togglePin(pinnedTokenIdx);
+                    }
+                }
+            });
         }
 
         // 更新所有可视化
@@ -1210,7 +1545,91 @@
                 renderAverageAttention(displayTokenIdx, hoveredLayerHead);
                 updateLayersGrid(displayTokenIdx);
             }
-            renderLayerButtons(displayTokenIdx); // 更新layer按钮颜色，传入当前token
+            renderLayerSlider(displayTokenIdx); // 更新layer滑块颜色，传入当前token
+            updateTokenIndicator(displayTokenIdx); // 更新token提示
+        }
+
+        // 更新Token指示器
+        function updateTokenIndicator(tokenIdx) {
+            const averageIndicator = document.getElementById('averageTokenIndicator');
+            const layersIndicator = document.getElementById('layersTokenIndicator');
+            const averageTokenText = document.getElementById('averageTokenText');
+            const layersTokenText = document.getElementById('layersTokenText');
+            
+            if (tokenIdx !== null && tokenIdx !== undefined) {
+                // 找到对应的token文本
+                const token = metadata.token_mappings.find(t => t.type === 'output' && t.output_token_idx === tokenIdx);
+                if (token && token.char_range) {
+                    const tokenText = metadata.output.text.substring(token.char_range[0], token.char_range[1]);
+                    averageTokenText.textContent = tokenText;
+                    layersTokenText.textContent = tokenText;
+                    averageIndicator.classList.add('active');
+                    layersIndicator.classList.add('active');
+                } else {
+                    averageIndicator.classList.remove('active');
+                    layersIndicator.classList.remove('active');
+                }
+            } else {
+                averageIndicator.classList.remove('active');
+                layersIndicator.classList.remove('active');
+            }
+        }
+
+        // 使用方向键导航token
+        function navigateToken(direction) {
+            // 获取所有output token的索引列表（按显示顺序）
+            const outputTokens = metadata.token_mappings
+                .filter(t => t.type === 'output' && t.char_range)
+                .sort((a, b) => a.char_range[0] - b.char_range[0])
+                .map(t => t.output_token_idx);
+            
+            if (outputTokens.length === 0) return;
+            
+            // 确定当前token索引
+            let activeTokenIdx = pinnedTokenIdx !== null ? pinnedTokenIdx : currentTokenIdx;
+            
+            if (activeTokenIdx === null) {
+                // 如果没有当前token，根据方向选择第一个或最后一个
+                activeTokenIdx = direction > 0 ? outputTokens[0] : outputTokens[outputTokens.length - 1];
+            } else {
+                // 找到当前token在列表中的位置
+                const currentIndex = outputTokens.indexOf(activeTokenIdx);
+                if (currentIndex !== -1) {
+                    // 计算下一个token的索引（循环）
+                    let nextIndex = currentIndex + direction;
+                    if (nextIndex < 0) nextIndex = outputTokens.length - 1;
+                    if (nextIndex >= outputTokens.length) nextIndex = 0;
+                    activeTokenIdx = outputTokens[nextIndex];
+                } else {
+                    // 当前token不在列表中，选择第一个
+                    activeTokenIdx = outputTokens[0];
+                }
+            }
+            
+            // 高亮token并固定
+            pinnedTokenIdx = activeTokenIdx;
+            document.querySelectorAll('.output-token').forEach(el => {
+                el.classList.remove('pinned');
+                if (parseInt(el.dataset.tokenIdx) === activeTokenIdx) {
+                    el.classList.add('pinned');
+                    // 滚动到可见区域
+                    el.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+                }
+            });
+            highlightToken(activeTokenIdx);
+        }
+
+        // 使用方向键导航layer
+        function navigateLayer(direction) {
+            const slider = document.getElementById('layerSlider');
+            let newLayer = currentLayer + direction;
+            
+            // 循环
+            if (newLayer < 0) newLayer = attentionData.layers - 1;
+            if (newLayer >= attentionData.layers) newLayer = 0;
+            
+            slider.value = newLayer;
+            slider.oninput();
         }
 
         // 固定/取消固定token
@@ -1222,6 +1641,7 @@
                     el.classList.remove('pinned');
                 });
                 clearHighlight();
+                updateTokenIndicator(null);
             } else {
                 // 固定到新token
                 pinnedTokenIdx = tokenIdx;
@@ -1250,7 +1670,8 @@
             // 更新attention显示
             renderAverageAttention(tokenIdx, hoveredLayerHead);
             updateLayersGrid(tokenIdx);
-            renderLayerButtons(tokenIdx); // 更新layer按钮颜色
+            renderLayerSlider(tokenIdx); // 更新layer滑块颜色
+            updateTokenIndicator(tokenIdx); // 更新token提示
         }
 
         // 清除高亮
@@ -1265,6 +1686,8 @@
             const canvas = document.getElementById('averageCanvas');
             const ctx = canvas.getContext('2d');
             ctx.clearRect(0, 0, canvas.width, canvas.height);
+            
+            updateTokenIndicator(null); // 隐藏token提示
         }
 
         // 显示错误

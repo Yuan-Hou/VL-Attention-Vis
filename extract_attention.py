@@ -170,15 +170,23 @@ class AttentionExtractor:
             input_length=input_length,
         )
         
+        print(f"output length: {len(output_ids)} tokens, total length: {len(all_token_ids)} tokens;\nattention map shape: {len(attentions)} {len(attentions[0])} {attentions[-1][0].shape}")
+
         # 整理 attention 数据
         layer_count = len(attentions[0])
         head_count = attentions[0][0].shape[1]
+
         attention_data = []
         for layer_idx in range(layer_count):
             layer_attentions = []
             for head_idx in range(head_count):
-                layer_attentions.append(attentions[0][layer_idx][0, head_idx, -len(output_ids):, image_token_range[0]:image_token_range[1]+1].cpu().tolist())
+                output_token_attentions = []
+                for output_token_idx in range(len(output_ids)):
+                    output_token_attentions.append(attentions[output_token_idx][layer_idx][0, head_idx, -1, image_token_range[0]:image_token_range[1]+1].cpu())
+                layer_attentions.append(torch.stack(output_token_attentions).cpu().numpy())  # 形状 (output_len, image_tokens)
+            layer_attentions = np.array(layer_attentions)  # 形状 (heads, output_len, image_tokens)
             attention_data.append(layer_attentions)
+        # 形状 (layers, heads, output_len, image_tokens)
         attention_data = np.array(attention_data)
         # 转置为 (output_len, layers, heads, image_tokens)
         attention_data = attention_data.transpose(2, 0, 1, 3)
@@ -211,7 +219,7 @@ class AttentionExtractor:
 
 
 
-        print(f"output length: {len(output_ids)} tokens, total length: {len(all_token_ids)} tokens;\nattention map shape: {len(attentions)} {len(attentions[0])} {attentions[0][0].shape}")
+        
         result = {
             "metadata": {
                 "image_path": image_path,

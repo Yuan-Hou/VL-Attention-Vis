@@ -1,6 +1,6 @@
 {
   "metadata": {
-    "image_path": "./1.png",
+    "image_path": "./test/1.png",
     "image_size": [
       1579,
       887
@@ -15,15 +15,15 @@
     ],
     "output_token_range": [
       1389,
-      1586
+      1507
     ],
-    "total_tokens": 1587
+    "total_tokens": 1508
   },
   "input": {
     "text": "user\n图中这几个人在干什么？\nassistant\n"
   },
   "output": {
-    "text": "图中这两位动漫风格的少女正在一起玩掌上游戏机。\n\n具体来说：\n\n- 两人并排坐在桌前，都戴着猫耳耳机，专注地看着手中的游戏机（看起来像Nintendo Switch）。\n- 左边的少女穿着绿色外套，戴着绿色猫耳，表情略带严肃或专注。\n- 右边的少女穿着粉色外套，戴着粉色猫耳，表情略显不耐烦或有些生气，似乎在和同伴争论或对游戏结果不满。\n- 桌上放着一袋零食（看起来是薯片），部分已经打开，薯片散落在桌面上，表明她们是在边吃边玩。\n- 背景是明亮的室内环境，窗外是城市天际线，暗示她们可能在家中或游戏室。\n\n总的来说，她们正在一起玩游戏，可能是在进行一场竞技或合作游戏，过程中产生了分歧或情绪波动，气氛轻松又带点小冲突。"
+    "text": "图中这两位可爱的动漫少女正在一起玩掌上游戏机。\n\n她们都戴着猫耳头饰，穿着类似校服的服装，坐在桌前，专注地操作着手中的游戏机。左边的女孩戴着绿色猫耳，右边的女孩戴着粉色猫耳，她们的表情都显得很认真，似乎在进行一场紧张刺激的游戏对战。\n\n桌上还放着一袋薯片，看起来她们是在一边吃零食一边玩游戏，享受着轻松愉快的时光。背景是明亮的室内环境，窗外可以看到城市建筑，整体氛围温馨而充满青春活力。"
   },
   "token_mappings": [
     {
@@ -35,7 +35,7 @@
         1
       ],
       "text": "图",
-      "average_attention": 0.03128070367703923
+      "average_attention": 0.01322174072265625
     },
     {
       "token_idx": 1390,
@@ -46,7 +46,7 @@
         2
       ],
       "text": "中",
-      "average_attention": 0.030851285970683057
+      "average_attention": 0.01284027099609375
     },
     {
       "token_idx": 1391,
@@ -57,7 +57,7 @@
         3
       ],
       "text": "这",
-      "average_attention": 0.031649199408687746
+      "average_attention": 0.01275634765625
     },
     {
       "token_idx": 1392,
@@ -68,7 +68,7 @@
         5
       ],
       "text": "两位",
-      "average_attention": 0.03391375209775976
+      "average_attention": 0.0150604248046875
     },
     {
       "token_idx": 1393,
@@ -76,274 +76,274 @@
       "type": "output",
       "char_range": [
         5,
-        7
+        8
       ],
-      "text": "动漫",
-      "average_attention": 0.03579075448360725
+      "text": "可爱的",
+      "average_attention": 0.023040771484375
     },
     {
       "token_idx": 1394,
       "output_token_idx": 5,
       "type": "output",
       "char_range": [
-        7,
-        9
+        8,
+        10
       ],
-      "text": "风格",
-      "average_attention": 0.03388826265823961
+      "text": "动漫",
+      "average_attention": 0.02398681640625
     },
     {
       "token_idx": 1395,
       "output_token_idx": 6,
       "type": "output",
       "char_range": [
-        9,
-        10
+        10,
+        12
       ],
-      "text": "的",
-      "average_attention": 0.033972125361308864
+      "text": "少女",
+      "average_attention": 0.02020263671875
     },
     {
       "token_idx": 1396,
       "output_token_idx": 7,
       "type": "output",
       "char_range": [
-        10,
-        12
+        12,
+        14
       ],
-      "text": "少女",
-      "average_attention": 0.03160494560841579
+      "text": "正在",
+      "average_attention": 0.0195465087890625
     },
     {
       "token_idx": 1397,
       "output_token_idx": 8,
       "type": "output",
       "char_range": [
-        12,
-        14
+        14,
+        16
       ],
-      "text": "正在",
-      "average_attention": 0.03413917406664704
+      "text": "一起",
+      "average_attention": 0.0212860107421875
     },
     {
       "token_idx": 1398,
       "output_token_idx": 9,
       "type": "output",
       "char_range": [
-        14,
-        16
+        16,
+        17
       ],
-      "text": "一起",
-      "average_attention": 0.03227107955863629
+      "text": "玩",
+      "average_attention": 0.02276611328125
     },
     {
       "token_idx": 1399,
       "output_token_idx": 10,
       "type": "output",
       "char_range": [
-        16,
-        17
+        17,
+        18
       ],
-      "text": "玩",
-      "average_attention": 0.03622043431465205
+      "text": "掌",
+      "average_attention": 0.0237884521484375
     },
     {
       "token_idx": 1400,
       "output_token_idx": 11,
       "type": "output",
       "char_range": [
-        17,
-        18
+        18,
+        19
       ],
-      "text": "掌",
-      "average_attention": 0.036653510568415294
+      "text": "上",
+      "average_attention": 0.020233154296875
     },
     {
       "token_idx": 1401,
       "output_token_idx": 12,
       "type": "output",
       "char_range": [
-        18,
-        19
+        19,
+        21
       ],
-      "text": "上",
-      "average_attention": 0.033026713073677015
+      "text": "游戏",
+      "average_attention": 0.0197601318359375
     },
     {
       "token_idx": 1402,
       "output_token_idx": 13,
       "type": "output",
       "char_range": [
-        19,
-        21
+        21,
+        22
       ],
-      "text": "游戏",
-      "average_attention": 0.035763708282112915
+      "text": "机",
+      "average_attention": 0.018829345703125
     },
     {
       "token_idx": 1403,
       "output_token_idx": 14,
       "type": "output",
       "char_range": [
-        21,
-        22
+        22,
+        25
       ],
-      "text": "机",
-      "average_attention": 0.0352235255390646
+      "text": "。\n\n",
+      "average_attention": 0.018096923828125
     },
     {
       "token_idx": 1404,
       "output_token_idx": 15,
       "type": "output",
       "char_range": [
-        22,
-        25
+        25,
+        27
       ],
-      "text": "。\n\n",
-      "average_attention": 0.03913497799099846
+      "text": "她们",
+      "average_attention": 0.011322021484375
     },
     {
       "token_idx": 1405,
       "output_token_idx": 16,
       "type": "output",
       "char_range": [
-        25,
-        27
+        27,
+        28
       ],
-      "text": "具体",
-      "average_attention": 0.03604123744261973
+      "text": "都",
+      "average_attention": 0.0174102783203125
     },
     {
       "token_idx": 1406,
       "output_token_idx": 17,
       "type": "output",
       "char_range": [
-        27,
-        29
+        28,
+        30
       ],
-      "text": "来说",
-      "average_attention": 0.033770484531607955
+      "text": "戴着",
+      "average_attention": 0.0193328857421875
     },
     {
       "token_idx": 1407,
       "output_token_idx": 18,
       "type": "output",
       "char_range": [
-        29,
-        32
+        30,
+        31
       ],
-      "text": "：\n\n",
-      "average_attention": 0.035109745562872774
+      "text": "猫",
+      "average_attention": 0.026092529296875
     },
     {
       "token_idx": 1408,
       "output_token_idx": 19,
       "type": "output",
       "char_range": [
-        32,
-        33
+        31,
+        32
       ],
-      "text": "-",
-      "average_attention": 0.033245131207768605
+      "text": "耳",
+      "average_attention": 0.0234527587890625
     },
     {
       "token_idx": 1409,
       "output_token_idx": 20,
       "type": "output",
       "char_range": [
-        33,
-        34
+        32,
+        33
       ],
-      "text": " ",
-      "average_attention": 0.03397767712704944
+      "text": "头",
+      "average_attention": 0.021026611328125
     },
     {
       "token_idx": 1410,
       "output_token_idx": 21,
       "type": "output",
       "char_range": [
-        34,
-        36
+        33,
+        34
       ],
-      "text": "两人",
-      "average_attention": 0.03733851953363044
+      "text": "饰",
+      "average_attention": 0.0184783935546875
     },
     {
       "token_idx": 1411,
       "output_token_idx": 22,
       "type": "output",
       "char_range": [
-        36,
-        37
+        34,
+        35
       ],
-      "text": "并",
-      "average_attention": 0.03500746657244641
+      "text": "，",
+      "average_attention": 0.0194091796875
     },
     {
       "token_idx": 1412,
       "output_token_idx": 23,
       "type": "output",
       "char_range": [
-        37,
-        38
+        35,
+        37
       ],
-      "text": "排",
-      "average_attention": 0.03451704331588704
+      "text": "穿着",
+      "average_attention": 0.01873779296875
     },
     {
       "token_idx": 1413,
       "output_token_idx": 24,
       "type": "output",
       "char_range": [
-        38,
-        40
+        37,
+        39
       ],
-      "text": "坐在",
-      "average_attention": 0.0350047479824252
+      "text": "类似",
+      "average_attention": 0.0226287841796875
     },
     {
       "token_idx": 1414,
       "output_token_idx": 25,
       "type": "output",
       "char_range": [
-        40,
-        41
+        39,
+        40
       ],
-      "text": "桌",
-      "average_attention": 0.0335464443032472
+      "text": "校",
+      "average_attention": 0.021026611328125
     },
     {
       "token_idx": 1415,
       "output_token_idx": 26,
       "type": "output",
       "char_range": [
-        41,
-        42
+        40,
+        41
       ],
-      "text": "前",
-      "average_attention": 0.03393989537753545
+      "text": "服",
+      "average_attention": 0.0191650390625
     },
     {
       "token_idx": 1416,
       "output_token_idx": 27,
       "type": "output",
       "char_range": [
-        42,
-        43
+        41,
+        42
       ],
-      "text": "，",
-      "average_attention": 0.03249932911921813
+      "text": "的",
+      "average_attention": 0.0170440673828125
     },
     {
       "token_idx": 1417,
       "output_token_idx": 28,
       "type": "output",
       "char_range": [
-        43,
+        42,
         44
       ],
-      "text": "都",
-      "average_attention": 0.03134836015167058
+      "text": "服装",
+      "average_attention": 0.016693115234375
     },
     {
       "token_idx": 1418,
@@ -351,21 +351,21 @@
       "type": "output",
       "char_range": [
         44,
-        46
+        45
       ],
-      "text": "戴着",
-      "average_attention": 0.03194350188553512
+      "text": "，",
+      "average_attention": 0.0168609619140625
     },
     {
       "token_idx": 1419,
       "output_token_idx": 30,
       "type": "output",
       "char_range": [
-        46,
+        45,
         47
       ],
-      "text": "猫",
-      "average_attention": 0.033924984944690977
+      "text": "坐在",
+      "average_attention": 0.0162353515625
     },
     {
       "token_idx": 1420,
@@ -375,8 +375,8 @@
         47,
         48
       ],
-      "text": "耳",
-      "average_attention": 0.037955025391729395
+      "text": "桌",
+      "average_attention": 0.021484375
     },
     {
       "token_idx": 1421,
@@ -384,1795 +384,956 @@
       "type": "output",
       "char_range": [
         48,
-        50
+        49
       ],
-      "text": "耳机",
-      "average_attention": 0.03436374301160487
+      "text": "前",
+      "average_attention": 0.0186920166015625
     },
     {
       "token_idx": 1422,
       "output_token_idx": 33,
       "type": "output",
       "char_range": [
-        50,
-        51
+        49,
+        50
       ],
       "text": "，",
-      "average_attention": 0.03652271867578529
+      "average_attention": 0.0164337158203125
     },
     {
       "token_idx": 1423,
       "output_token_idx": 34,
       "type": "output",
       "char_range": [
-        51,
-        53
+        50,
+        52
       ],
       "text": "专注",
-      "average_attention": 0.03260452733216767
+      "average_attention": 0.0157012939453125
     },
     {
       "token_idx": 1424,
       "output_token_idx": 35,
       "type": "output",
       "char_range": [
-        53,
-        56
+        52,
+        53
       ],
-      "text": "地看着",
-      "average_attention": 0.03210259859621207
+      "text": "地",
+      "average_attention": 0.01467132568359375
     },
     {
       "token_idx": 1425,
       "output_token_idx": 36,
       "type": "output",
       "char_range": [
-        56,
-        59
+        53,
+        55
       ],
-      "text": "手中的",
-      "average_attention": 0.0352981932850544
+      "text": "操作",
+      "average_attention": 0.01678466796875
     },
     {
       "token_idx": 1426,
       "output_token_idx": 37,
       "type": "output",
       "char_range": [
-        59,
-        61
+        55,
+        57
       ],
-      "text": "游戏",
-      "average_attention": 0.023973516035928896
+      "text": "着手",
+      "average_attention": 0.0171661376953125
     },
     {
       "token_idx": 1427,
       "output_token_idx": 38,
       "type": "output",
       "char_range": [
-        61,
-        62
+        57,
+        59
       ],
-      "text": "机",
-      "average_attention": 0.029519338178236872
+      "text": "中的",
+      "average_attention": 0.01568603515625
     },
     {
       "token_idx": 1428,
       "output_token_idx": 39,
       "type": "output",
       "char_range": [
-        62,
-        63
+        59,
+        61
       ],
-      "text": "（",
-      "average_attention": 0.032483102773198984
+      "text": "游戏",
+      "average_attention": 0.0186920166015625
     },
     {
       "token_idx": 1429,
       "output_token_idx": 40,
       "type": "output",
       "char_range": [
-        63,
-        66
+        61,
+        62
       ],
-      "text": "看起来",
-      "average_attention": 0.03248051840351448
+      "text": "机",
+      "average_attention": 0.0166778564453125
     },
     {
       "token_idx": 1430,
       "output_token_idx": 41,
       "type": "output",
       "char_range": [
-        66,
-        67
+        62,
+        63
       ],
-      "text": "像",
-      "average_attention": 0.03324154383781282
+      "text": "。",
+      "average_attention": 0.0167236328125
     },
     {
       "token_idx": 1431,
       "output_token_idx": 42,
       "type": "output",
       "char_range": [
-        67,
-        75
+        63,
+        65
       ],
-      "text": "Nintendo",
-      "average_attention": 0.035713297702104956
+      "text": "左边",
+      "average_attention": 0.01373291015625
     },
     {
       "token_idx": 1432,
       "output_token_idx": 43,
       "type": "output",
       "char_range": [
-        75,
-        82
+        65,
+        68
       ],
-      "text": " Switch",
-      "average_attention": 0.03323130799209921
+      "text": "的女孩",
+      "average_attention": 0.0170440673828125
     },
     {
       "token_idx": 1433,
       "output_token_idx": 44,
       "type": "output",
       "char_range": [
-        82,
-        83
+        68,
+        70
       ],
-      "text": "）",
-      "average_attention": 0.030793944982032563
+      "text": "戴着",
+      "average_attention": 0.02069091796875
     },
     {
       "token_idx": 1434,
       "output_token_idx": 45,
       "type": "output",
       "char_range": [
-        83,
-        85
+        70,
+        72
       ],
-      "text": "。\n",
-      "average_attention": 0.036806827209743
+      "text": "绿色",
+      "average_attention": 0.023590087890625
     },
     {
       "token_idx": 1435,
       "output_token_idx": 46,
       "type": "output",
       "char_range": [
-        85,
-        86
+        72,
+        73
       ],
-      "text": "-",
-      "average_attention": 0.03524758753206062
+      "text": "猫",
+      "average_attention": 0.02459716796875
     },
     {
       "token_idx": 1436,
       "output_token_idx": 47,
       "type": "output",
-      "char_range": null,
-      "text": " �",
-      "average_attention": 0.03304347716883065
+      "char_range": [
+        73,
+        74
+      ],
+      "text": "耳",
+      "average_attention": 0.018585205078125
     },
     {
       "token_idx": 1437,
       "output_token_idx": 48,
       "type": "output",
-      "char_range": null,
-      "text": "�",
-      "average_attention": 0.03346956271025649
+      "char_range": [
+        74,
+        75
+      ],
+      "text": "，",
+      "average_attention": 0.017333984375
     },
     {
       "token_idx": 1438,
       "output_token_idx": 49,
       "type": "output",
       "char_range": [
-        88,
-        89
+        75,
+        77
       ],
-      "text": "边",
-      "average_attention": 0.03314271020955473
+      "text": "右边",
+      "average_attention": 0.01904296875
     },
     {
       "token_idx": 1439,
       "output_token_idx": 50,
       "type": "output",
       "char_range": [
-        89,
-        90
+        77,
+        80
       ],
-      "text": "的",
-      "average_attention": 0.029761256756170768
+      "text": "的女孩",
+      "average_attention": 0.014556884765625
     },
     {
       "token_idx": 1440,
       "output_token_idx": 51,
       "type": "output",
       "char_range": [
-        90,
-        92
+        80,
+        82
       ],
-      "text": "少女",
-      "average_attention": 0.032915220680024414
+      "text": "戴着",
+      "average_attention": 0.0167388916015625
     },
     {
       "token_idx": 1441,
       "output_token_idx": 52,
       "type": "output",
       "char_range": [
-        92,
-        94
+        82,
+        84
       ],
-      "text": "穿着",
-      "average_attention": 0.034768169599832685
+      "text": "粉色",
+      "average_attention": 0.01995849609375
     },
     {
       "token_idx": 1442,
       "output_token_idx": 53,
       "type": "output",
       "char_range": [
-        94,
-        96
+        84,
+        85
       ],
-      "text": "绿色",
-      "average_attention": 0.03149930912120604
+      "text": "猫",
+      "average_attention": 0.022003173828125
     },
     {
       "token_idx": 1443,
       "output_token_idx": 54,
       "type": "output",
       "char_range": [
-        96,
-        98
+        85,
+        86
       ],
-      "text": "外套",
-      "average_attention": 0.03526021517028984
+      "text": "耳",
+      "average_attention": 0.0177764892578125
     },
     {
       "token_idx": 1444,
       "output_token_idx": 55,
       "type": "output",
       "char_range": [
-        98,
-        99
+        86,
+        87
       ],
       "text": "，",
-      "average_attention": 0.03421424345116677
+      "average_attention": 0.0167236328125
     },
     {
       "token_idx": 1445,
       "output_token_idx": 56,
       "type": "output",
       "char_range": [
-        99,
-        101
+        87,
+        89
       ],
-      "text": "戴着",
-      "average_attention": 0.0364606825711668
+      "text": "她们",
+      "average_attention": 0.01488494873046875
     },
     {
       "token_idx": 1446,
       "output_token_idx": 57,
       "type": "output",
       "char_range": [
-        101,
-        103
+        89,
+        92
       ],
-      "text": "绿色",
-      "average_attention": 0.03331467109850614
+      "text": "的表情",
+      "average_attention": 0.0157012939453125
     },
     {
       "token_idx": 1447,
       "output_token_idx": 58,
       "type": "output",
       "char_range": [
-        103,
-        104
+        92,
+        93
       ],
-      "text": "猫",
-      "average_attention": 0.03394645071326876
+      "text": "都",
+      "average_attention": 0.01483154296875
     },
     {
       "token_idx": 1448,
       "output_token_idx": 59,
       "type": "output",
       "char_range": [
-        104,
-        105
+        93,
+        95
       ],
-      "text": "耳",
-      "average_attention": 0.038551298750858144
+      "text": "显得",
+      "average_attention": 0.01377105712890625
     },
     {
       "token_idx": 1449,
       "output_token_idx": 60,
       "type": "output",
       "char_range": [
-        105,
-        106
+        95,
+        96
       ],
-      "text": "，",
-      "average_attention": 0.03937516571366597
+      "text": "很",
+      "average_attention": 0.01439666748046875
     },
     {
       "token_idx": 1450,
       "output_token_idx": 61,
       "type": "output",
       "char_range": [
-        106,
-        108
+        96,
+        98
       ],
-      "text": "表情",
-      "average_attention": 0.03332415792275225
+      "text": "认真",
+      "average_attention": 0.01384735107421875
     },
     {
       "token_idx": 1451,
       "output_token_idx": 62,
       "type": "output",
       "char_range": [
-        108,
-        109
+        98,
+        99
       ],
-      "text": "略",
-      "average_attention": 0.03479075239220442
+      "text": "，",
+      "average_attention": 0.01316070556640625
     },
     {
       "token_idx": 1452,
       "output_token_idx": 63,
       "type": "output",
       "char_range": [
-        109,
-        110
+        99,
+        101
       ],
-      "text": "带",
-      "average_attention": 0.03366357604505101
+      "text": "似乎",
+      "average_attention": 0.0124053955078125
     },
     {
       "token_idx": 1453,
       "output_token_idx": 64,
       "type": "output",
       "char_range": [
-        110,
-        112
+        101,
+        102
       ],
-      "text": "严肃",
-      "average_attention": 0.034318173101962765
+      "text": "在",
+      "average_attention": 0.0115966796875
     },
     {
       "token_idx": 1454,
       "output_token_idx": 65,
       "type": "output",
       "char_range": [
-        112,
-        113
+        102,
+        104
       ],
-      "text": "或",
-      "average_attention": 0.03423689464029637
+      "text": "进行",
+      "average_attention": 0.0137176513671875
     },
     {
       "token_idx": 1455,
       "output_token_idx": 66,
       "type": "output",
       "char_range": [
-        113,
-        115
+        104,
+        106
       ],
-      "text": "专注",
-      "average_attention": 0.03435209572438957
+      "text": "一场",
+      "average_attention": 0.01348114013671875
     },
     {
       "token_idx": 1456,
       "output_token_idx": 67,
       "type": "output",
       "char_range": [
-        115,
-        117
+        106,
+        108
       ],
-      "text": "。\n",
-      "average_attention": 0.03633269421364884
+      "text": "紧张",
+      "average_attention": 0.01313018798828125
     },
     {
       "token_idx": 1457,
       "output_token_idx": 68,
       "type": "output",
       "char_range": [
-        117,
-        118
+        108,
+        110
       ],
-      "text": "-",
-      "average_attention": 0.03767246545876908
+      "text": "刺激",
+      "average_attention": 0.01224517822265625
     },
     {
       "token_idx": 1458,
       "output_token_idx": 69,
       "type": "output",
-      "char_range": null,
-      "text": " �",
-      "average_attention": 0.03642937221591058
+      "char_range": [
+        110,
+        113
+      ],
+      "text": "的游戏",
+      "average_attention": 0.0115509033203125
     },
     {
       "token_idx": 1459,
       "output_token_idx": 70,
       "type": "output",
-      "char_range": null,
-      "text": "�",
-      "average_attention": 0.03412088439327935
+      "char_range": [
+        113,
+        114
+      ],
+      "text": "对",
+      "average_attention": 0.0118560791015625
     },
     {
       "token_idx": 1460,
       "output_token_idx": 71,
       "type": "output",
       "char_range": [
-        120,
-        121
+        114,
+        115
       ],
-      "text": "边",
-      "average_attention": 0.03273918486029214
+      "text": "战",
+      "average_attention": 0.013885498046875
     },
     {
       "token_idx": 1461,
       "output_token_idx": 72,
       "type": "output",
       "char_range": [
-        121,
-        122
+        115,
+        118
       ],
-      "text": "的",
-      "average_attention": 0.0351840623981796
+      "text": "。\n\n",
+      "average_attention": 0.01226043701171875
     },
     {
       "token_idx": 1462,
       "output_token_idx": 73,
       "type": "output",
       "char_range": [
-        122,
-        124
+        118,
+        120
       ],
-      "text": "少女",
-      "average_attention": 0.033176031704165526
+      "text": "桌上",
+      "average_attention": 0.0123291015625
     },
     {
       "token_idx": 1463,
       "output_token_idx": 74,
       "type": "output",
       "char_range": [
-        124,
-        126
+        120,
+        121
       ],
-      "text": "穿着",
-      "average_attention": 0.0350319789094968
+      "text": "还",
+      "average_attention": 0.0175933837890625
     },
     {
       "token_idx": 1464,
       "output_token_idx": 75,
       "type": "output",
       "char_range": [
-        126,
-        128
+        121,
+        122
       ],
-      "text": "粉色",
-      "average_attention": 0.03341128665778782
+      "text": "放",
+      "average_attention": 0.0160064697265625
     },
     {
       "token_idx": 1465,
       "output_token_idx": 76,
       "type": "output",
       "char_range": [
-        128,
-        130
+        122,
+        123
       ],
-      "text": "外套",
-      "average_attention": 0.03735808357200988
+      "text": "着",
+      "average_attention": 0.0176544189453125
     },
     {
       "token_idx": 1466,
       "output_token_idx": 77,
       "type": "output",
       "char_range": [
-        130,
-        131
+        123,
+        124
       ],
-      "text": "，",
-      "average_attention": 0.03503947633058218
+      "text": "一",
+      "average_attention": 0.022674560546875
     },
     {
       "token_idx": 1467,
       "output_token_idx": 78,
       "type": "output",
       "char_range": [
-        131,
-        133
+        124,
+        125
       ],
-      "text": "戴着",
-      "average_attention": 0.03629201890171484
+      "text": "袋",
+      "average_attention": 0.023590087890625
     },
     {
       "token_idx": 1468,
       "output_token_idx": 79,
       "type": "output",
       "char_range": [
-        133,
-        135
+        125,
+        126
       ],
-      "text": "粉色",
-      "average_attention": 0.033372963940779106
+      "text": "薯",
+      "average_attention": 0.0259246826171875
     },
     {
       "token_idx": 1469,
       "output_token_idx": 80,
       "type": "output",
       "char_range": [
-        135,
-        136
+        126,
+        127
       ],
-      "text": "猫",
-      "average_attention": 0.033477473881168826
+      "text": "片",
+      "average_attention": 0.020904541015625
     },
     {
       "token_idx": 1470,
       "output_token_idx": 81,
       "type": "output",
       "char_range": [
-        136,
-        137
+        127,
+        128
       ],
-      "text": "耳",
-      "average_attention": 0.03277608222478603
+      "text": "，",
+      "average_attention": 0.0193023681640625
     },
     {
       "token_idx": 1471,
       "output_token_idx": 82,
       "type": "output",
       "char_range": [
-        137,
-        138
+        128,
+        131
       ],
-      "text": "，",
-      "average_attention": 0.03550952053015822
+      "text": "看起来",
+      "average_attention": 0.016448974609375
     },
     {
       "token_idx": 1472,
       "output_token_idx": 83,
       "type": "output",
       "char_range": [
-        138,
-        140
+        131,
+        133
       ],
-      "text": "表情",
-      "average_attention": 0.033837174958629465
+      "text": "她们",
+      "average_attention": 0.01140594482421875
     },
     {
       "token_idx": 1473,
       "output_token_idx": 84,
       "type": "output",
       "char_range": [
-        140,
-        141
+        133,
+        135
       ],
-      "text": "略",
-      "average_attention": 0.03481332284312676
+      "text": "是在",
+      "average_attention": 0.01175689697265625
     },
     {
       "token_idx": 1474,
       "output_token_idx": 85,
       "type": "output",
       "char_range": [
-        141,
-        142
+        135,
+        137
       ],
-      "text": "显",
-      "average_attention": 0.032429899082849614
+      "text": "一边",
+      "average_attention": 0.01259613037109375
     },
     {
       "token_idx": 1475,
       "output_token_idx": 86,
       "type": "output",
       "char_range": [
-        142,
-        143
+        137,
+        138
       ],
-      "text": "不",
-      "average_attention": 0.03740498176645998
+      "text": "吃",
+      "average_attention": 0.0127105712890625
     },
     {
       "token_idx": 1476,
       "output_token_idx": 87,
       "type": "output",
       "char_range": [
-        143,
-        144
+        138,
+        140
       ],
-      "text": "耐",
-      "average_attention": 0.023885655548399824
+      "text": "零食",
+      "average_attention": 0.0125732421875
     },
     {
       "token_idx": 1477,
       "output_token_idx": 88,
       "type": "output",
       "char_range": [
-        144,
-        145
+        140,
+        142
       ],
-      "text": "烦",
-      "average_attention": 0.028220198874533673
+      "text": "一边",
+      "average_attention": 0.0102691650390625
     },
     {
       "token_idx": 1478,
       "output_token_idx": 89,
       "type": "output",
       "char_range": [
-        145,
-        146
+        142,
+        145
       ],
-      "text": "或",
-      "average_attention": 0.03057191269353109
+      "text": "玩游戏",
+      "average_attention": 0.00943756103515625
     },
     {
       "token_idx": 1479,
       "output_token_idx": 90,
       "type": "output",
       "char_range": [
-        146,
-        148
+        145,
+        146
       ],
-      "text": "有些",
-      "average_attention": 0.031035265548639977
+      "text": "，",
+      "average_attention": 0.00931549072265625
     },
     {
       "token_idx": 1480,
       "output_token_idx": 91,
       "type": "output",
       "char_range": [
-        148,
-        150
+        146,
+        148
       ],
-      "text": "生气",
-      "average_attention": 0.03321036077568416
+      "text": "享受",
+      "average_attention": 0.00942230224609375
     },
     {
       "token_idx": 1481,
       "output_token_idx": 92,
       "type": "output",
       "char_range": [
-        150,
-        151
+        148,
+        149
       ],
-      "text": "，",
-      "average_attention": 0.032891748831671286
+      "text": "着",
+      "average_attention": 0.00969696044921875
     },
     {
       "token_idx": 1482,
       "output_token_idx": 93,
       "type": "output",
       "char_range": [
-        151,
-        153
+        149,
+        151
       ],
-      "text": "似乎",
-      "average_attention": 0.03131078320381221
+      "text": "轻松",
+      "average_attention": 0.01070404052734375
     },
     {
       "token_idx": 1483,
       "output_token_idx": 94,
       "type": "output",
       "char_range": [
-        153,
-        154
+        151,
+        153
       ],
-      "text": "在",
-      "average_attention": 0.03218406977087499
+      "text": "愉快",
+      "average_attention": 0.009002685546875
     },
     {
       "token_idx": 1484,
       "output_token_idx": 95,
       "type": "output",
       "char_range": [
-        154,
-        155
+        153,
+        154
       ],
-      "text": "和",
-      "average_attention": 0.03475178518063574
+      "text": "的",
+      "average_attention": 0.0079193115234375
     },
     {
       "token_idx": 1485,
       "output_token_idx": 96,
       "type": "output",
       "char_range": [
-        155,
-        157
+        154,
+        156
       ],
-      "text": "同伴",
-      "average_attention": 0.032769062750947896
+      "text": "时光",
+      "average_attention": 0.0103759765625
     },
     {
       "token_idx": 1486,
       "output_token_idx": 97,
       "type": "output",
       "char_range": [
-        157,
-        159
+        156,
+        157
       ],
-      "text": "争论",
-      "average_attention": 0.032094555212193565
+      "text": "。",
+      "average_attention": 0.00879669189453125
     },
     {
       "token_idx": 1487,
       "output_token_idx": 98,
       "type": "output",
       "char_range": [
-        159,
-        160
+        157,
+        159
       ],
-      "text": "或",
-      "average_attention": 0.031506814148638713
+      "text": "背景",
+      "average_attention": 0.0120086669921875
     },
     {
       "token_idx": 1488,
       "output_token_idx": 99,
       "type": "output",
       "char_range": [
-        160,
-        161
+        159,
+        160
       ],
-      "text": "对",
-      "average_attention": 0.03266584334660392
+      "text": "是",
+      "average_attention": 0.01727294921875
     },
     {
       "token_idx": 1489,
       "output_token_idx": 100,
       "type": "output",
       "char_range": [
-        161,
-        163
+        160,
+        162
       ],
-      "text": "游戏",
-      "average_attention": 0.032178129832404846
+      "text": "明亮",
+      "average_attention": 0.019317626953125
     },
     {
       "token_idx": 1490,
       "output_token_idx": 101,
       "type": "output",
       "char_range": [
-        163,
-        165
+        162,
+        163
       ],
-      "text": "结果",
-      "average_attention": 0.03505933686558668
+      "text": "的",
+      "average_attention": 0.0157318115234375
     },
     {
       "token_idx": 1491,
       "output_token_idx": 102,
       "type": "output",
       "char_range": [
-        165,
-        167
+        163,
+        165
       ],
-      "text": "不满",
-      "average_attention": 0.03535486619418611
+      "text": "室内",
+      "average_attention": 0.0182952880859375
     },
     {
       "token_idx": 1492,
       "output_token_idx": 103,
       "type": "output",
       "char_range": [
-        167,
-        169
+        165,
+        167
       ],
-      "text": "。\n",
-      "average_attention": 0.034133216398898145
+      "text": "环境",
+      "average_attention": 0.01457977294921875
     },
     {
       "token_idx": 1493,
       "output_token_idx": 104,
       "type": "output",
       "char_range": [
-        169,
-        170
+        167,
+        168
       ],
-      "text": "-",
-      "average_attention": 0.03614529658996931
+      "text": "，",
+      "average_attention": 0.01314544677734375
     },
     {
       "token_idx": 1494,
       "output_token_idx": 105,
       "type": "output",
-      "char_range": null,
-      "text": " �",
-      "average_attention": 0.03360850422674986
+      "char_range": [
+        168,
+        170
+      ],
+      "text": "窗外",
+      "average_attention": 0.01436614990234375
     },
     {
       "token_idx": 1495,
       "output_token_idx": 106,
       "type": "output",
-      "char_range": null,
-      "text": "�",
-      "average_attention": 0.03526209883541334
+      "char_range": [
+        170,
+        174
+      ],
+      "text": "可以看到",
+      "average_attention": 0.0164642333984375
     },
     {
       "token_idx": 1496,
       "output_token_idx": 107,
       "type": "output",
-      "char_range": null,
-      "text": "�",
-      "average_attention": 0.039077109568567414
+      "char_range": [
+        174,
+        176
+      ],
+      "text": "城市",
+      "average_attention": 0.01702880859375
     },
     {
       "token_idx": 1497,
       "output_token_idx": 108,
       "type": "output",
       "char_range": [
-        172,
-        173
+        176,
+        178
       ],
-      "text": "上",
-      "average_attention": 0.036989117235352136
+      "text": "建筑",
+      "average_attention": 0.0157928466796875
     },
     {
       "token_idx": 1498,
       "output_token_idx": 109,
       "type": "output",
       "char_range": [
-        173,
-        174
+        178,
+        179
       ],
-      "text": "放",
-      "average_attention": 0.03806318002888087
+      "text": "，",
+      "average_attention": 0.0137786865234375
     },
     {
       "token_idx": 1499,
       "output_token_idx": 110,
       "type": "output",
       "char_range": [
-        174,
-        175
+        179,
+        181
       ],
-      "text": "着",
-      "average_attention": 0.03528603469736264
+      "text": "整体",
+      "average_attention": 0.0101318359375
     },
     {
       "token_idx": 1500,
       "output_token_idx": 111,
       "type": "output",
       "char_range": [
-        175,
-        176
+        181,
+        183
       ],
-      "text": "一",
-      "average_attention": 0.0338388615189964
+      "text": "氛围",
+      "average_attention": 0.00864410400390625
     },
     {
       "token_idx": 1501,
       "output_token_idx": 112,
       "type": "output",
       "char_range": [
-        176,
-        177
+        183,
+        185
       ],
-      "text": "袋",
-      "average_attention": 0.03758299955656322
+      "text": "温馨",
+      "average_attention": 0.00916290283203125
     },
     {
       "token_idx": 1502,
       "output_token_idx": 113,
       "type": "output",
       "char_range": [
-        177,
-        179
+        185,
+        186
       ],
-      "text": "零食",
-      "average_attention": 0.031333633101219026
+      "text": "而",
+      "average_attention": 0.0088043212890625
     },
     {
       "token_idx": 1503,
       "output_token_idx": 114,
       "type": "output",
       "char_range": [
-        179,
-        180
+        186,
+        188
       ],
-      "text": "（",
-      "average_attention": 0.034029261031404134
+      "text": "充满",
+      "average_attention": 0.0092315673828125
     },
     {
       "token_idx": 1504,
       "output_token_idx": 115,
       "type": "output",
       "char_range": [
-        180,
-        183
+        188,
+        190
       ],
-      "text": "看起来",
-      "average_attention": 0.031502939254227445
+      "text": "青春",
+      "average_attention": 0.01004791259765625
     },
     {
       "token_idx": 1505,
       "output_token_idx": 116,
       "type": "output",
       "char_range": [
-        183,
-        184
+        190,
+        192
       ],
-      "text": "是",
-      "average_attention": 0.03358736635361769
+      "text": "活力",
+      "average_attention": 0.009033203125
     },
     {
       "token_idx": 1506,
       "output_token_idx": 117,
       "type": "output",
       "char_range": [
-        184,
-        185
+        192,
+        193
       ],
-      "text": "薯",
-      "average_attention": 0.034064088028150634
+      "text": "。",
+      "average_attention": 0.0073394775390625
     },
     {
       "token_idx": 1507,
       "output_token_idx": 118,
       "type": "output",
       "char_range": [
-        185,
-        186
-      ],
-      "text": "片",
-      "average_attention": 0.03585779316512697
-    },
-    {
-      "token_idx": 1508,
-      "output_token_idx": 119,
-      "type": "output",
-      "char_range": [
-        186,
-        188
-      ],
-      "text": "），",
-      "average_attention": 0.03940757564641163
-    },
-    {
-      "token_idx": 1509,
-      "output_token_idx": 120,
-      "type": "output",
-      "char_range": [
-        188,
-        190
-      ],
-      "text": "部分",
-      "average_attention": 0.03549821859978501
-    },
-    {
-      "token_idx": 1510,
-      "output_token_idx": 121,
-      "type": "output",
-      "char_range": [
-        190,
-        192
-      ],
-      "text": "已经",
-      "average_attention": 0.03518591679622176
-    },
-    {
-      "token_idx": 1511,
-      "output_token_idx": 122,
-      "type": "output",
-      "char_range": [
-        192,
-        194
-      ],
-      "text": "打开",
-      "average_attention": 0.03718970135249993
-    },
-    {
-      "token_idx": 1512,
-      "output_token_idx": 123,
-      "type": "output",
-      "char_range": [
-        194,
-        195
-      ],
-      "text": "，",
-      "average_attention": 0.03466753522167342
-    },
-    {
-      "token_idx": 1513,
-      "output_token_idx": 124,
-      "type": "output",
-      "char_range": [
-        195,
-        196
-      ],
-      "text": "薯",
-      "average_attention": 0.03669829106673481
-    },
-    {
-      "token_idx": 1514,
-      "output_token_idx": 125,
-      "type": "output",
-      "char_range": [
-        196,
-        197
-      ],
-      "text": "片",
-      "average_attention": 0.031754549661804514
-    },
-    {
-      "token_idx": 1515,
-      "output_token_idx": 126,
-      "type": "output",
-      "char_range": [
-        197,
-        198
-      ],
-      "text": "散",
-      "average_attention": 0.032586990328748545
-    },
-    {
-      "token_idx": 1516,
-      "output_token_idx": 127,
-      "type": "output",
-      "char_range": [
-        198,
-        200
-      ],
-      "text": "落在",
-      "average_attention": 0.034568908345706646
-    },
-    {
-      "token_idx": 1517,
-      "output_token_idx": 128,
-      "type": "output",
-      "char_range": [
-        200,
-        201
-      ],
-      "text": "桌",
-      "average_attention": 0.033550217972116964
-    },
-    {
-      "token_idx": 1518,
-      "output_token_idx": 129,
-      "type": "output",
-      "char_range": [
-        201,
+        193,
         203
       ],
-      "text": "面上",
-      "average_attention": 0.0371653669798292
-    },
-    {
-      "token_idx": 1519,
-      "output_token_idx": 130,
-      "type": "output",
-      "char_range": [
-        203,
-        204
-      ],
-      "text": "，",
-      "average_attention": 0.03274718108948498
-    },
-    {
-      "token_idx": 1520,
-      "output_token_idx": 131,
-      "type": "output",
-      "char_range": [
-        204,
-        206
-      ],
-      "text": "表明",
-      "average_attention": 0.034665341741271095
-    },
-    {
-      "token_idx": 1521,
-      "output_token_idx": 132,
-      "type": "output",
-      "char_range": [
-        206,
-        208
-      ],
-      "text": "她们",
-      "average_attention": 0.034314371588428795
-    },
-    {
-      "token_idx": 1522,
-      "output_token_idx": 133,
-      "type": "output",
-      "char_range": [
-        208,
-        210
-      ],
-      "text": "是在",
-      "average_attention": 0.035993153578600494
-    },
-    {
-      "token_idx": 1523,
-      "output_token_idx": 134,
-      "type": "output",
-      "char_range": [
-        210,
-        211
-      ],
-      "text": "边",
-      "average_attention": 0.036107384498752046
-    },
-    {
-      "token_idx": 1524,
-      "output_token_idx": 135,
-      "type": "output",
-      "char_range": [
-        211,
-        212
-      ],
-      "text": "吃",
-      "average_attention": 0.031451264341587425
-    },
-    {
-      "token_idx": 1525,
-      "output_token_idx": 136,
-      "type": "output",
-      "char_range": [
-        212,
-        213
-      ],
-      "text": "边",
-      "average_attention": 0.02375285657237921
-    },
-    {
-      "token_idx": 1526,
-      "output_token_idx": 137,
-      "type": "output",
-      "char_range": [
-        213,
-        214
-      ],
-      "text": "玩",
-      "average_attention": 0.027481627532154346
-    },
-    {
-      "token_idx": 1527,
-      "output_token_idx": 138,
-      "type": "output",
-      "char_range": [
-        214,
-        216
-      ],
-      "text": "。\n",
-      "average_attention": 0.03141842671404475
-    },
-    {
-      "token_idx": 1528,
-      "output_token_idx": 139,
-      "type": "output",
-      "char_range": [
-        216,
-        217
-      ],
-      "text": "-",
-      "average_attention": 0.0339436171338395
-    },
-    {
-      "token_idx": 1529,
-      "output_token_idx": 140,
-      "type": "output",
-      "char_range": null,
-      "text": " �",
-      "average_attention": 0.032931679910061754
-    },
-    {
-      "token_idx": 1530,
-      "output_token_idx": 141,
-      "type": "output",
-      "char_range": null,
-      "text": "�",
-      "average_attention": 0.031723598400845994
-    },
-    {
-      "token_idx": 1531,
-      "output_token_idx": 142,
-      "type": "output",
-      "char_range": null,
-      "text": "�",
-      "average_attention": 0.03213442422867594
-    },
-    {
-      "token_idx": 1532,
-      "output_token_idx": 143,
-      "type": "output",
-      "char_range": [
-        219,
-        220
-      ],
-      "text": "景",
-      "average_attention": 0.03093216999645693
-    },
-    {
-      "token_idx": 1533,
-      "output_token_idx": 144,
-      "type": "output",
-      "char_range": [
-        220,
-        221
-      ],
-      "text": "是",
-      "average_attention": 0.035755284312847184
-    },
-    {
-      "token_idx": 1534,
-      "output_token_idx": 145,
-      "type": "output",
-      "char_range": [
-        221,
-        223
-      ],
-      "text": "明亮",
-      "average_attention": 0.038350205676260504
-    },
-    {
-      "token_idx": 1535,
-      "output_token_idx": 146,
-      "type": "output",
-      "char_range": [
-        223,
-        224
-      ],
-      "text": "的",
-      "average_attention": 0.03274699009319879
-    },
-    {
-      "token_idx": 1536,
-      "output_token_idx": 147,
-      "type": "output",
-      "char_range": [
-        224,
-        226
-      ],
-      "text": "室内",
-      "average_attention": 0.03190375271807156
-    },
-    {
-      "token_idx": 1537,
-      "output_token_idx": 148,
-      "type": "output",
-      "char_range": [
-        226,
-        228
-      ],
-      "text": "环境",
-      "average_attention": 0.03260968082865816
-    },
-    {
-      "token_idx": 1538,
-      "output_token_idx": 149,
-      "type": "output",
-      "char_range": [
-        228,
-        229
-      ],
-      "text": "，",
-      "average_attention": 0.031493314066901895
-    },
-    {
-      "token_idx": 1539,
-      "output_token_idx": 150,
-      "type": "output",
-      "char_range": [
-        229,
-        231
-      ],
-      "text": "窗外",
-      "average_attention": 0.031013069868787678
-    },
-    {
-      "token_idx": 1540,
-      "output_token_idx": 151,
-      "type": "output",
-      "char_range": [
-        231,
-        232
-      ],
-      "text": "是",
-      "average_attention": 0.030716957892475964
-    },
-    {
-      "token_idx": 1541,
-      "output_token_idx": 152,
-      "type": "output",
-      "char_range": [
-        232,
-        234
-      ],
-      "text": "城市",
-      "average_attention": 0.032898934271781734
-    },
-    {
-      "token_idx": 1542,
-      "output_token_idx": 153,
-      "type": "output",
-      "char_range": [
-        234,
-        235
-      ],
-      "text": "天",
-      "average_attention": 0.036649040639566435
-    },
-    {
-      "token_idx": 1543,
-      "output_token_idx": 154,
-      "type": "output",
-      "char_range": [
-        235,
-        236
-      ],
-      "text": "际",
-      "average_attention": 0.03537619767451336
-    },
-    {
-      "token_idx": 1544,
-      "output_token_idx": 155,
-      "type": "output",
-      "char_range": [
-        236,
-        237
-      ],
-      "text": "线",
-      "average_attention": 0.035354590603697146
-    },
-    {
-      "token_idx": 1545,
-      "output_token_idx": 156,
-      "type": "output",
-      "char_range": [
-        237,
-        238
-      ],
-      "text": "，",
-      "average_attention": 0.036465170859383694
-    },
-    {
-      "token_idx": 1546,
-      "output_token_idx": 157,
-      "type": "output",
-      "char_range": [
-        238,
-        240
-      ],
-      "text": "暗示",
-      "average_attention": 0.03706714185935502
-    },
-    {
-      "token_idx": 1547,
-      "output_token_idx": 158,
-      "type": "output",
-      "char_range": [
-        240,
-        242
-      ],
-      "text": "她们",
-      "average_attention": 0.03748903692218947
-    },
-    {
-      "token_idx": 1548,
-      "output_token_idx": 159,
-      "type": "output",
-      "char_range": [
-        242,
-        244
-      ],
-      "text": "可能",
-      "average_attention": 0.03859826631172447
-    },
-    {
-      "token_idx": 1549,
-      "output_token_idx": 160,
-      "type": "output",
-      "char_range": [
-        244,
-        245
-      ],
-      "text": "在",
-      "average_attention": 0.03738893852363251
-    },
-    {
-      "token_idx": 1550,
-      "output_token_idx": 161,
-      "type": "output",
-      "char_range": [
-        245,
-        247
-      ],
-      "text": "家中",
-      "average_attention": 0.0360441277564956
-    },
-    {
-      "token_idx": 1551,
-      "output_token_idx": 162,
-      "type": "output",
-      "char_range": [
-        247,
-        248
-      ],
-      "text": "或",
-      "average_attention": 0.035250365097684325
-    },
-    {
-      "token_idx": 1552,
-      "output_token_idx": 163,
-      "type": "output",
-      "char_range": [
-        248,
-        250
-      ],
-      "text": "游戏",
-      "average_attention": 0.038622867891300976
-    },
-    {
-      "token_idx": 1553,
-      "output_token_idx": 164,
-      "type": "output",
-      "char_range": [
-        250,
-        251
-      ],
-      "text": "室",
-      "average_attention": 0.034729900293266606
-    },
-    {
-      "token_idx": 1554,
-      "output_token_idx": 165,
-      "type": "output",
-      "char_range": [
-        251,
-        254
-      ],
-      "text": "。\n\n",
-      "average_attention": 0.03622693799438294
-    },
-    {
-      "token_idx": 1555,
-      "output_token_idx": 166,
-      "type": "output",
-      "char_range": [
-        254,
-        258
-      ],
-      "text": "总的来说",
-      "average_attention": 0.0390426975931454
-    },
-    {
-      "token_idx": 1556,
-      "output_token_idx": 167,
-      "type": "output",
-      "char_range": [
-        258,
-        259
-      ],
-      "text": "，",
-      "average_attention": 0.03552683908501786
-    },
-    {
-      "token_idx": 1557,
-      "output_token_idx": 168,
-      "type": "output",
-      "char_range": [
-        259,
-        261
-      ],
-      "text": "她们",
-      "average_attention": 0.03456114149542454
-    },
-    {
-      "token_idx": 1558,
-      "output_token_idx": 169,
-      "type": "output",
-      "char_range": [
-        261,
-        263
-      ],
-      "text": "正在",
-      "average_attention": 0.034029622430998566
-    },
-    {
-      "token_idx": 1559,
-      "output_token_idx": 170,
-      "type": "output",
-      "char_range": [
-        263,
-        265
-      ],
-      "text": "一起",
-      "average_attention": 0.034476625793476455
-    },
-    {
-      "token_idx": 1560,
-      "output_token_idx": 171,
-      "type": "output",
-      "char_range": [
-        265,
-        268
-      ],
-      "text": "玩游戏",
-      "average_attention": 0.03546443300857228
-    },
-    {
-      "token_idx": 1561,
-      "output_token_idx": 172,
-      "type": "output",
-      "char_range": [
-        268,
-        269
-      ],
-      "text": "，",
-      "average_attention": 0.03718874249243552
-    },
-    {
-      "token_idx": 1562,
-      "output_token_idx": 173,
-      "type": "output",
-      "char_range": [
-        269,
-        271
-      ],
-      "text": "可能",
-      "average_attention": 0.030838109283215096
-    },
-    {
-      "token_idx": 1563,
-      "output_token_idx": 174,
-      "type": "output",
-      "char_range": [
-        271,
-        273
-      ],
-      "text": "是在",
-      "average_attention": 0.03746993355453728
-    },
-    {
-      "token_idx": 1564,
-      "output_token_idx": 175,
-      "type": "output",
-      "char_range": [
-        273,
-        275
-      ],
-      "text": "进行",
-      "average_attention": 0.03480139922214352
-    },
-    {
-      "token_idx": 1565,
-      "output_token_idx": 176,
-      "type": "output",
-      "char_range": [
-        275,
-        277
-      ],
-      "text": "一场",
-      "average_attention": 0.032301643733486284
-    },
-    {
-      "token_idx": 1566,
-      "output_token_idx": 177,
-      "type": "output",
-      "char_range": [
-        277,
-        279
-      ],
-      "text": "竞技",
-      "average_attention": 0.03046092923846339
-    },
-    {
-      "token_idx": 1567,
-      "output_token_idx": 178,
-      "type": "output",
-      "char_range": [
-        279,
-        280
-      ],
-      "text": "或",
-      "average_attention": 0.03312282725167224
-    },
-    {
-      "token_idx": 1568,
-      "output_token_idx": 179,
-      "type": "output",
-      "char_range": [
-        280,
-        282
-      ],
-      "text": "合作",
-      "average_attention": 0.03531842705174915
-    },
-    {
-      "token_idx": 1569,
-      "output_token_idx": 180,
-      "type": "output",
-      "char_range": [
-        282,
-        284
-      ],
-      "text": "游戏",
-      "average_attention": 0.034706124564547504
-    },
-    {
-      "token_idx": 1570,
-      "output_token_idx": 181,
-      "type": "output",
-      "char_range": [
-        284,
-        285
-      ],
-      "text": "，",
-      "average_attention": 0.0353812525714632
-    },
-    {
-      "token_idx": 1571,
-      "output_token_idx": 182,
-      "type": "output",
-      "char_range": [
-        285,
-        288
-      ],
-      "text": "过程中",
-      "average_attention": 0.035444555721493354
-    },
-    {
-      "token_idx": 1572,
-      "output_token_idx": 183,
-      "type": "output",
-      "char_range": [
-        288,
-        291
-      ],
-      "text": "产生了",
-      "average_attention": 0.033209442203604105
-    },
-    {
-      "token_idx": 1573,
-      "output_token_idx": 184,
-      "type": "output",
-      "char_range": [
-        291,
-        293
-      ],
-      "text": "分歧",
-      "average_attention": 0.029219116714331347
-    },
-    {
-      "token_idx": 1574,
-      "output_token_idx": 185,
-      "type": "output",
-      "char_range": [
-        293,
-        294
-      ],
-      "text": "或",
-      "average_attention": 0.019166788670411695
-    },
-    {
-      "token_idx": 1575,
-      "output_token_idx": 186,
-      "type": "output",
-      "char_range": [
-        294,
-        296
-      ],
-      "text": "情绪",
-      "average_attention": 0.01268317683426459
-    },
-    {
-      "token_idx": 1576,
-      "output_token_idx": 187,
-      "type": "output",
-      "char_range": [
-        296,
-        298
-      ],
-      "text": "波动",
-      "average_attention": 0.013182386972652999
-    },
-    {
-      "token_idx": 1577,
-      "output_token_idx": 188,
-      "type": "output",
-      "char_range": [
-        298,
-        299
-      ],
-      "text": "，",
-      "average_attention": 0.012766070742987466
-    },
-    {
-      "token_idx": 1578,
-      "output_token_idx": 189,
-      "type": "output",
-      "char_range": [
-        299,
-        301
-      ],
-      "text": "气氛",
-      "average_attention": 0.014670431609370422
-    },
-    {
-      "token_idx": 1579,
-      "output_token_idx": 190,
-      "type": "output",
-      "char_range": [
-        301,
-        303
-      ],
-      "text": "轻松",
-      "average_attention": 0.013768554092038419
-    },
-    {
-      "token_idx": 1580,
-      "output_token_idx": 191,
-      "type": "output",
-      "char_range": [
-        303,
-        304
-      ],
-      "text": "又",
-      "average_attention": 0.011571468088668286
-    },
-    {
-      "token_idx": 1581,
-      "output_token_idx": 192,
-      "type": "output",
-      "char_range": [
-        304,
-        305
-      ],
-      "text": "带",
-      "average_attention": 0.010252064238220114
-    },
-    {
-      "token_idx": 1582,
-      "output_token_idx": 193,
-      "type": "output",
-      "char_range": [
-        305,
-        306
-      ],
-      "text": "点",
-      "average_attention": 0.0083578103812704
-    },
-    {
-      "token_idx": 1583,
-      "output_token_idx": 194,
-      "type": "output",
-      "char_range": [
-        306,
-        307
-      ],
-      "text": "小",
-      "average_attention": 0.009024161983949541
-    },
-    {
-      "token_idx": 1584,
-      "output_token_idx": 195,
-      "type": "output",
-      "char_range": [
-        307,
-        309
-      ],
-      "text": "冲突",
-      "average_attention": 0.016985245547289803
-    },
-    {
-      "token_idx": 1585,
-      "output_token_idx": 196,
-      "type": "output",
-      "char_range": [
-        309,
-        310
-      ],
-      "text": "。",
-      "average_attention": 0.008716727842720694
-    },
-    {
-      "token_idx": 1586,
-      "output_token_idx": 197,
-      "type": "output",
-      "char_range": [
-        310,
-        320
-      ],
       "text": "<|im_end|>",
-      "average_attention": 0.008553054171022182
+      "average_attention": 0.008392333984375
     }
   ],
   "attention_file": "attention_output.npz"
